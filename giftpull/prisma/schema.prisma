@@ -1,0 +1,320 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── ENUMS ────────────────────────────────────────────────
+
+enum GiftCardBrand {
+  XBOX
+  STEAM
+  NINTENDO
+  PLAYSTATION
+  GOOGLE_PLAY
+  AMAZON
+  APPLE
+  ROBLOX
+  SPOTIFY
+  NETFLIX
+}
+
+enum GiftCardStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+  REDEEMED
+  BUYBACK
+  LISTED
+}
+
+enum GiftCardSource {
+  BULK_IMPORT
+  API
+  USER_LISTED
+  BUYBACK_RECYCLE
+}
+
+enum PackTier {
+  STARTER
+  STANDARD
+  PREMIUM
+  ULTRA
+}
+
+enum RarityTier {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+enum TransactionType {
+  STOREFRONT_PURCHASE
+  BUNDLE_PURCHASE
+  GACHA_PULL
+  BUYBACK
+  P2P_PURCHASE
+  P2P_SALE
+  POINTS_REDEMPTION
+  POINTS_PACK_REDEMPTION
+}
+
+enum PaymentMethod {
+  STRIPE
+  USDC_BASE
+  POINTS
+  FREE
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum PointsType {
+  PURCHASE_EARN
+  GACHA_EARN
+  DAILY_LOGIN
+  STREAK_BONUS
+  REFERRAL
+  REDEMPTION
+  EXPIRY
+  ADMIN_ADJUST
+}
+
+enum SellerTier {
+  NEW
+  VERIFIED
+  POWER
+}
+
+enum ListingStatus {
+  ACTIVE
+  SOLD
+  CANCELLED
+  EXPIRED
+}
+
+enum DisputeStatus {
+  NONE
+  OPEN
+  RESOLVED_BUYER
+  RESOLVED_SELLER
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  FAILED
+}
+
+// ─── MODELS ───────────────────────────────────────────────
+
+model User {
+  id              String     @id @default(cuid())
+  email           String     @unique
+  name            String?
+  passwordHash    String?
+  image           String?
+  walletAddress   String?    @unique
+  pointsBalance   Int        @default(0)
+  usdcBalance     Float      @default(0)
+  sellerTier      SellerTier @default(NEW)
+  sellerRating    Float?
+  totalSales      Int        @default(0)
+  referralCode    String     @unique @default(cuid())
+  referredById    String?
+  referredBy      User?      @relation("Referrals", fields: [referredById], references: [id])
+  referrals       User[]     @relation("Referrals")
+  isAdmin         Boolean    @default(false)
+  lastLoginAt     DateTime?
+  loginStreak     Int        @default(0)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  giftCards       GiftCard[]     @relation("Owner")
+  transactions    Transaction[]
+  pointsLedger    PointsLedger[]
+  sellerListings  P2PListing[]   @relation("Seller")
+  buyerListings   P2PListing[]   @relation("Buyer")
+  pullHistory     GachaPull[]
+  accounts        Account[]
+  sessions        Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model GiftCard {
+  id                 String             @id @default(cuid())
+  brand              GiftCardBrand
+  denomination       Float
+  code               String
+  status             GiftCardStatus     @default(AVAILABLE)
+  source             GiftCardSource     @default(BULK_IMPORT)
+  fmv                Float
+  currentOwnerId     String?
+  currentOwner       User?              @relation("Owner", fields: [currentOwnerId], references: [id])
+  listedPrice        Float?
+  discountPercent    Float?
+  rarityTier         RarityTier?
+  verificationStatus VerificationStatus @default(VERIFIED)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  transactions       Transaction[]
+  listings           P2PListing[]
+  gachaPulls         GachaPull[]
+}
+
+model GachaPack {
+  id          String   @id @default(cuid())
+  tier        PackTier @unique
+  name        String
+  description String?
+  price       Float
+  pointsCost  Int?
+  dailyLimit  Int      @default(5)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  odds  GachaOdds[]
+  pulls GachaPull[]
+}
+
+model GachaOdds {
+  id         String     @id @default(cuid())
+  packId     String
+  pack       GachaPack  @relation(fields: [packId], references: [id])
+  rarityTier RarityTier
+  cardValue  Float
+  weight     Float
+  createdAt  DateTime   @default(now())
+
+  @@unique([packId, rarityTier])
+}
+
+model GachaPull {
+  id            String     @id @default(cuid())
+  userId        String
+  user          User       @relation(fields: [userId], references: [id])
+  packId        String
+  pack          GachaPack  @relation(fields: [packId], references: [id])
+  giftCardId    String
+  giftCard      GiftCard   @relation(fields: [giftCardId], references: [id])
+  rarityTier    RarityTier
+  cardValue     Float
+  buybackOffer  Float
+  wasBoughtBack Boolean    @default(false)
+  randomSeed    String?
+  createdAt     DateTime   @default(now())
+}
+
+model Transaction {
+  id                    String            @id @default(cuid())
+  type                  TransactionType
+  userId                String
+  user                  User              @relation(fields: [userId], references: [id])
+  giftCardId            String?
+  giftCard              GiftCard?         @relation(fields: [giftCardId], references: [id])
+  amount                Float
+  currency              String            @default("USD")
+  paymentMethod         PaymentMethod
+  stripePaymentIntentId String?
+  baseTxHash            String?
+  pointsEarned          Int               @default(0)
+  status                TransactionStatus @default(PENDING)
+  metadata              Json?
+  createdAt             DateTime          @default(now())
+}
+
+model PointsLedger {
+  id            String     @id @default(cuid())
+  userId        String
+  user          User       @relation(fields: [userId], references: [id])
+  amount        Int
+  type          PointsType
+  multiplier    Float      @default(1.0)
+  description   String?
+  transactionId String?
+  createdAt     DateTime   @default(now())
+}
+
+model P2PListing {
+  id             String        @id @default(cuid())
+  sellerId       String
+  seller         User          @relation("Seller", fields: [sellerId], references: [id])
+  giftCardId     String
+  giftCard       GiftCard      @relation(fields: [giftCardId], references: [id])
+  askingPrice    Float
+  suggestedPrice Float
+  status         ListingStatus @default(ACTIVE)
+  buyerId        String?
+  buyer          User?         @relation("Buyer", fields: [buyerId], references: [id])
+  escrowTxHash   String?
+  disputeStatus  DisputeStatus @default(NONE)
+  disputeReason  String?
+  createdAt      DateTime      @default(now())
+  expiresAt      DateTime
+}
+
+model Bundle {
+  id              String       @id @default(cuid())
+  name            String
+  description     String?
+  price           Float
+  faceValue       Float
+  discountPercent Float
+  isActive        Boolean      @default(true)
+  createdAt       DateTime     @default(now())
+
+  items BundleItem[]
+}
+
+model BundleItem {
+  id           String        @id @default(cuid())
+  bundleId     String
+  bundle       Bundle        @relation(fields: [bundleId], references: [id])
+  brand        GiftCardBrand
+  denomination Float
+  quantity     Int           @default(1)
+}

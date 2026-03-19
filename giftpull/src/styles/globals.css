@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@layer base {
+  body {
+    @apply bg-background text-text-primary font-sans antialiased;
+  }
+}
+
+@layer components {
+  .card-hover {
+    @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20;
+  }
+
+  .gradient-border {
+    @apply relative;
+    background: linear-gradient(135deg, #F59E0B, #EF4444, #8B5CF6, #3B82F6);
+    padding: 2px;
+    border-radius: 14px;
+  }
+
+  .gradient-border-inner {
+    @apply bg-surface rounded-card;
+  }
+
+  .rarity-common { @apply border-gray-500; }
+  .rarity-uncommon { @apply border-success; }
+  .rarity-rare { @apply border-primary; }
+  .rarity-epic { @apply border-epic; }
+  .rarity-legendary {
+    background: linear-gradient(135deg, #F59E0B, #EF4444);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .legendary-border {
+    background: linear-gradient(135deg, #F59E0B, #EF4444, #F59E0B);
+    background-size: 200% 200%;
+    animation: shimmer 2s linear infinite;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-surface-light rounded-full;
+}
