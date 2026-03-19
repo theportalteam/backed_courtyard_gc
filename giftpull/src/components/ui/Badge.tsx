@@ -5,17 +5,17 @@ import { cn } from "@/lib/utils";
 
 const variantStyles = {
   default:
-    "bg-surface-light text-text-secondary border border-border-subtle",
+    "bg-bg-elevated text-text-secondary border border-bg-border",
   success:
-    "bg-success/15 text-success border border-success/30",
+    "bg-success-muted text-success border border-success/30",
   warning:
-    "bg-warning/15 text-warning border border-warning/30",
+    "bg-warning-muted text-warning border border-warning/30",
   epic:
-    "bg-epic/15 text-epic border border-epic/30",
+    "bg-rarity-epic/15 text-rarity-epic border border-rarity-epic/30",
   legendary:
-    "bg-gradient-to-r from-warning/20 to-red-500/20 text-warning border border-warning/30",
+    "bg-gradient-to-r from-warning-muted to-danger-muted text-warning border border-warning/30",
   brand:
-    "bg-primary/15 text-primary border border-primary/30",
+    "bg-primary-muted text-primary border border-primary/30",
 } as const;
 
 const sizeStyles = {

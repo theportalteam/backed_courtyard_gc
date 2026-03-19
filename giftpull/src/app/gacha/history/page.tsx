@@ -70,30 +70,30 @@ const rarityBadgeVariant: Record<string, string> = {
 // Skeleton for loading
 function StatSkeleton() {
   return (
-    <div className="bg-surface border border-border-subtle rounded-card p-5 animate-pulse">
+    <div className="bg-bg-surface border border-bg-border rounded-card p-5 animate-pulse">
       <div className="flex items-center gap-2 mb-3">
-        <div className="w-8 h-8 bg-surface-light rounded-lg" />
-        <div className="h-3 w-20 bg-surface-light rounded" />
+        <div className="w-8 h-8 bg-bg-elevated rounded-lg" />
+        <div className="h-3 w-20 bg-bg-elevated rounded" />
       </div>
-      <div className="h-8 w-24 bg-surface-light rounded" />
+      <div className="h-8 w-24 bg-bg-elevated rounded" />
     </div>
   );
 }
 
 function PullSkeleton() {
   return (
-    <div className="bg-surface border border-border-subtle rounded-card p-4 animate-pulse">
+    <div className="bg-bg-surface border border-bg-border rounded-card p-4 animate-pulse">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-surface-light rounded-lg" />
+          <div className="w-10 h-10 bg-bg-elevated rounded-lg" />
           <div>
-            <div className="h-4 w-28 bg-surface-light rounded mb-2" />
-            <div className="h-3 w-20 bg-surface-light rounded" />
+            <div className="h-4 w-28 bg-bg-elevated rounded mb-2" />
+            <div className="h-3 w-20 bg-bg-elevated rounded" />
           </div>
         </div>
         <div className="text-right">
-          <div className="h-5 w-16 bg-surface-light rounded mb-2" />
-          <div className="h-3 w-12 bg-surface-light rounded" />
+          <div className="h-5 w-16 bg-bg-elevated rounded mb-2" />
+          <div className="h-3 w-12 bg-bg-elevated rounded" />
         </div>
       </div>
     </div>
@@ -431,7 +431,7 @@ export default function HistoryPage() {
                   <Card
                     variant="default"
                     padding="md"
-                    className="hover:border-border-subtle/60 transition-colors"
+                    className="hover:border-bg-border/60 transition-colors"
                   >
                     <div className="flex items-center justify-between gap-4">
                       {/* Left: brand icon + details */}
@@ -475,7 +475,7 @@ export default function HistoryPage() {
                             </Badge>
                             <span>{formatDate(pull.createdAt)}</span>
                             {pull.boughtBack && (
-                              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-surface-light text-text-secondary border border-border-subtle">
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-bg-elevated text-text-secondary border border-bg-border">
                                 Bought Back
                               </span>
                             )}

@@ -39,7 +39,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
           <div
             ref={ref}
             className={cn(
-              "bg-surface rounded-card",
+              "bg-bg-surface rounded-card",
               paddingStyles[padding],
               className
             )}
@@ -55,13 +55,13 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          "bg-surface rounded-card border",
-          variant === "default" && "border-border-subtle",
+          "bg-bg-surface rounded-card border",
+          variant === "default" && "border-bg-border",
           variant === "interactive" &&
-            "border-border-subtle card-hover cursor-pointer",
+            "border-bg-border hover:-translate-y-0.5 hover:shadow-card-hover hover:border-primary/50 transition-all duration-200 cursor-pointer",
           variant === "rarity" && rarity
             ? `border-2 ${getRarityBorderClass(rarity)}`
-            : variant === "rarity" && "border-border-subtle",
+            : variant === "rarity" && "border-bg-border",
           paddingStyles[padding],
           className
         )}
@@ -81,7 +81,7 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, children, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("mb-4 pb-4 border-b border-border-subtle", className)}
+      className={cn("mb-4 pb-4 border-b border-bg-border", className)}
       {...props}
     >
       {children}
@@ -97,7 +97,7 @@ const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className, children, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("mt-4 pt-4 border-t border-border-subtle", className)}
+      className={cn("mt-4 pt-4 border-t border-bg-border", className)}
       {...props}
     >
       {children}

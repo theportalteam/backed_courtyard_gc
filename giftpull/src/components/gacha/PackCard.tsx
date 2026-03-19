@@ -123,7 +123,7 @@ export function PackCard({ pack, authenticated, onPull }: PackCardProps) {
           </div>
 
           {/* Expected value */}
-          <div className="bg-surface-light/60 border border-border-subtle rounded-xl px-4 py-3 mb-4 text-center">
+          <div className="bg-bg-elevated/60 border border-bg-border rounded-xl px-4 py-3 mb-4 text-center">
             <p className="text-xs text-text-secondary uppercase tracking-wider font-semibold mb-0.5">
               Average Value
             </p>
@@ -135,7 +135,7 @@ export function PackCard({ pack, authenticated, onPull }: PackCardProps) {
           {/* View Odds expandable */}
           <button
             onClick={() => setShowOdds(!showOdds)}
-            className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-light/50 transition-colors mb-4"
+            className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-bg-elevated/50 transition-colors mb-4"
           >
             <span>View Odds</span>
             <motion.span
@@ -155,7 +155,7 @@ export function PackCard({ pack, authenticated, onPull }: PackCardProps) {
                 transition={{ duration: 0.25, ease: "easeInOut" }}
                 className="overflow-hidden mb-4"
               >
-                <div className="bg-surface-light/40 border border-border-subtle rounded-xl p-3 space-y-2">
+                <div className="bg-bg-elevated/40 border border-bg-border rounded-xl p-3 space-y-2">
                   {pack.odds.map((entry) => (
                     <div
                       key={entry.rarity}
@@ -201,7 +201,7 @@ export function PackCard({ pack, authenticated, onPull }: PackCardProps) {
                     "w-2.5 h-2.5 rounded-full transition-colors",
                     i < pullsRemaining
                       ? "bg-success"
-                      : "bg-surface-light border border-border-subtle"
+                      : "bg-bg-elevated border border-bg-border"
                   )}
                 />
               ))}

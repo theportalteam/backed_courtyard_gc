@@ -78,7 +78,7 @@ export default function HomePage() {
           </motion.p>
 
           <motion.p
-            className="mt-4 text-base text-text-secondary/70 max-w-xl mx-auto"
+            className="mt-4 text-base text-text-tertiary max-w-xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}

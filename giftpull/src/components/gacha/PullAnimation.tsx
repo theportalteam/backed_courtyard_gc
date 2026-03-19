@@ -2,9 +2,8 @@
 
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { getRarityConfig, type RarityTier } from "@/lib/rarity";
 import { getRarityColor } from "@/lib/utils";
-
-type RarityTier = "COMMON" | "UNCOMMON" | "RARE" | "EPIC" | "LEGENDARY";
 
 interface PullAnimationProps {
   rarityTier: RarityTier;
@@ -431,7 +430,7 @@ export function PullAnimation({
                   <motion.div
                     className="relative w-56 h-80 sm:w-64 sm:h-96 rounded-2xl overflow-hidden"
                     style={{
-                      background: `linear-gradient(145deg, #1A1F2E, #242B3D)`,
+                      background: `linear-gradient(145deg, #131929, #1A2035)`,
                       border: `2px solid ${hintColor}50`,
                     }}
                     initial={{ scale: 0, rotate: -10 }}
@@ -773,7 +772,7 @@ function RevealCardInner({
   cardDenomination: number;
 }) {
   return (
-    <div className="w-56 sm:w-64 bg-[#1A1F2E] rounded-2xl p-6 text-center relative overflow-hidden">
+    <div className="w-56 sm:w-64 bg-bg-surface rounded-2xl p-6 text-center relative overflow-hidden">
       {/* Inner radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"

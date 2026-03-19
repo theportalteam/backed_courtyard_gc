@@ -133,7 +133,7 @@ export function BuybackPrompt({
 
           {/* New balance */}
           <motion.div
-            className="bg-surface-light/50 border border-border-subtle rounded-xl p-4 mb-6"
+            className="bg-bg-elevated/50 border border-bg-border rounded-xl p-4 mb-6"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -180,7 +180,7 @@ export function BuybackPrompt({
     <Modal isOpen={isOpen} onClose={onClose} title="Sell Back Card" size="sm">
       <div>
         {/* Card details */}
-        <div className="flex items-center gap-3 mb-5 pb-4 border-b border-border-subtle">
+        <div className="flex items-center gap-3 mb-5 pb-4 border-b border-bg-border">
           <div
             className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
             style={{ backgroundColor: `${brandColor}20` }}
@@ -225,7 +225,7 @@ export function BuybackPrompt({
         </div>
 
         {/* Balance change */}
-        <div className="bg-surface-light/50 border border-border-subtle rounded-xl p-4 mb-6">
+        <div className="bg-bg-elevated/50 border border-bg-border rounded-xl p-4 mb-6">
           <div className="flex items-center justify-between text-sm">
             <span className="text-text-secondary">Current USDC Balance</span>
             <span className="text-text-primary font-medium">
@@ -244,7 +244,7 @@ export function BuybackPrompt({
         </div>
 
         {/* Warning note */}
-        <div className="flex items-start gap-2 text-xs text-text-secondary/70 mb-5">
+        <div className="flex items-start gap-2 text-xs text-text-tertiary mb-5">
           <AlertTriangle className="w-3.5 h-3.5 text-warning shrink-0 mt-0.5" />
           <p>
             This action is permanent. The card will be removed from your

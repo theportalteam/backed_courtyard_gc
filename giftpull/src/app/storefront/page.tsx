@@ -20,36 +20,36 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 
 function SkeletonCard() {
   return (
-    <div className="bg-surface rounded-card border border-border-subtle p-5 animate-pulse">
+    <div className="bg-bg-surface rounded-card border border-bg-border p-5 animate-pulse">
       <div className="flex items-center justify-between mb-4">
-        <div className="h-6 w-20 bg-surface-light rounded-full" />
-        <div className="h-5 w-16 bg-surface-light rounded-full" />
+        <div className="h-6 w-20 bg-bg-elevated rounded-full" />
+        <div className="h-5 w-16 bg-bg-elevated rounded-full" />
       </div>
-      <div className="h-6 w-48 bg-surface-light rounded-lg mb-4" />
-      <div className="h-px w-full bg-surface-light mb-4" />
+      <div className="h-6 w-48 bg-bg-elevated rounded-lg mb-4" />
+      <div className="h-px w-full bg-bg-elevated mb-4" />
       <div className="flex items-end justify-between mb-5">
-        <div className="h-8 w-24 bg-surface-light rounded-lg" />
+        <div className="h-8 w-24 bg-bg-elevated rounded-lg" />
       </div>
-      <div className="h-10 w-full bg-surface-light rounded-xl" />
+      <div className="h-10 w-full bg-bg-elevated rounded-xl" />
     </div>
   );
 }
 
 function SkeletonBundle() {
   return (
-    <div className="bg-surface rounded-card border border-border-subtle p-5 animate-pulse">
+    <div className="bg-bg-surface rounded-card border border-bg-border p-5 animate-pulse">
       <div className="flex items-center gap-2.5 mb-4">
-        <div className="w-10 h-10 bg-surface-light rounded-xl" />
+        <div className="w-10 h-10 bg-bg-elevated rounded-xl" />
         <div>
-          <div className="h-5 w-32 bg-surface-light rounded-lg mb-1" />
-          <div className="h-3 w-48 bg-surface-light rounded-lg" />
+          <div className="h-5 w-32 bg-bg-elevated rounded-lg mb-1" />
+          <div className="h-3 w-48 bg-bg-elevated rounded-lg" />
         </div>
       </div>
       <div className="space-y-2 mb-4">
-        <div className="h-8 w-full bg-surface-light rounded-lg" />
-        <div className="h-8 w-full bg-surface-light rounded-lg" />
+        <div className="h-8 w-full bg-bg-elevated rounded-lg" />
+        <div className="h-8 w-full bg-bg-elevated rounded-lg" />
       </div>
-      <div className="h-10 w-full bg-surface-light rounded-xl" />
+      <div className="h-10 w-full bg-bg-elevated rounded-xl" />
     </div>
   );
 }
@@ -184,7 +184,7 @@ export default function StorefrontPage() {
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
                 className={cn(
-                  "bg-surface-light border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary",
+                  "bg-bg-elevated border border-bg-border rounded-xl px-4 py-2.5 text-sm text-text-primary",
                   "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary",
                   "transition-all duration-200 cursor-pointer appearance-none pr-8"
                 )}
@@ -208,7 +208,7 @@ export default function StorefrontPage() {
           </div>
         ) : filteredCards.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16">
-            <div className="w-16 h-16 rounded-2xl bg-surface-light flex items-center justify-center mb-4">
+            <div className="w-16 h-16 rounded-2xl bg-bg-elevated flex items-center justify-center mb-4">
               <ShoppingBag className="w-8 h-8 text-text-secondary" />
             </div>
             <h3 className="text-lg font-semibold text-text-primary mb-1">
@@ -260,7 +260,7 @@ export default function StorefrontPage() {
               ))}
             </div>
           ) : bundles.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 bg-surface/50 rounded-card border border-border-subtle">
+            <div className="flex flex-col items-center justify-center py-12 bg-bg-surface/50 rounded-card border border-bg-border">
               <PackageOpen className="w-10 h-10 text-text-secondary mb-3" />
               <p className="text-sm text-text-secondary">
                 No bundles available right now. Check back soon!

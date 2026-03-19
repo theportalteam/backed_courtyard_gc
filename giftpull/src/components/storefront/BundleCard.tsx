@@ -70,7 +70,7 @@ export function BundleCard({ bundle }: BundleCardProps) {
               return (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between bg-surface-light/50 rounded-lg px-3 py-2"
+                  className="flex items-center justify-between bg-bg-elevated/50 rounded-lg px-3 py-2"
                 >
                   <div className="flex items-center gap-2">
                     <span
@@ -92,7 +92,7 @@ export function BundleCard({ bundle }: BundleCardProps) {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-border-subtle my-3" />
+        <div className="h-px bg-bg-border my-3" />
 
         {/* Pricing comparison */}
         <div className="flex items-center justify-between mb-4">

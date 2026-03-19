@@ -63,7 +63,7 @@ export function Navbar() {
     pathname === href || pathname?.startsWith(href + "/");
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-border-subtle bg-background/80 backdrop-blur-xl">
+    <nav className="sticky top-0 z-50 w-full border-b border-bg-border bg-bg-surface/80 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Left: Logo */}
@@ -83,7 +83,7 @@ export function Navbar() {
                   "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
                   isActive(link.href)
                     ? "bg-primary/15 text-primary"
-                    : "text-text-secondary hover:text-text-primary hover:bg-surface-light"
+                    : "text-text-secondary hover:text-text-primary hover:bg-bg-elevated"
                 )}
               >
                 {link.label}
@@ -94,13 +94,13 @@ export function Navbar() {
           {/* Right: Auth area (desktop) */}
           <div className="hidden md:flex items-center gap-3">
             {status === "loading" && (
-              <div className="w-32 h-8 bg-surface-light rounded-lg animate-pulse" />
+              <div className="w-32 h-8 bg-bg-elevated rounded-lg animate-pulse" />
             )}
 
             {status === "authenticated" && user && (
               <>
                 {/* Points balance */}
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-surface rounded-lg border border-border-subtle">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-surface rounded-lg border border-bg-border">
                   <Coins className="w-4 h-4 text-warning" />
                   <span className="text-sm font-medium text-text-primary">
                     {formatPoints(user.pointsBalance ?? 0)}
@@ -108,7 +108,7 @@ export function Navbar() {
                 </div>
 
                 {/* USDC balance */}
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-surface rounded-lg border border-border-subtle">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-surface rounded-lg border border-bg-border">
                   <DollarSign className="w-4 h-4 text-success" />
                   <span className="text-sm font-medium text-text-primary">
                     {formatCurrency(user.usdcBalance ?? 0)}
@@ -121,8 +121,8 @@ export function Navbar() {
                     onClick={() => setDropdownOpen((prev) => !prev)}
                     className={cn(
                       "flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors",
-                      "hover:bg-surface-light",
-                      dropdownOpen && "bg-surface-light"
+                      "hover:bg-bg-elevated",
+                      dropdownOpen && "bg-bg-elevated"
                     )}
                   >
                     <div className="w-7 h-7 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
@@ -141,10 +141,10 @@ export function Navbar() {
 
                   {/* Dropdown menu */}
                   {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-surface border border-border-subtle rounded-xl shadow-xl shadow-black/30 py-1 z-50">
+                    <div className="absolute right-0 mt-2 w-48 bg-bg-surface border border-bg-border rounded-xl shadow-xl shadow-black/30 py-1 z-50">
                       <Link
                         href="/profile"
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-light transition-colors"
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors"
                         onClick={() => setDropdownOpen(false)}
                       >
                         <User className="w-4 h-4" />
@@ -153,20 +153,20 @@ export function Navbar() {
                       {user.isAdmin && (
                         <Link
                           href="/admin"
-                          className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-light transition-colors"
+                          className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors"
                           onClick={() => setDropdownOpen(false)}
                         >
                           <Shield className="w-4 h-4" />
                           Admin
                         </Link>
                       )}
-                      <div className="my-1 border-t border-border-subtle" />
+                      <div className="my-1 border-t border-bg-border" />
                       <button
                         onClick={() => {
                           setDropdownOpen(false);
                           signOut();
                         }}
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-surface-light transition-colors w-full"
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-bg-elevated transition-colors w-full"
                       >
                         <LogOut className="w-4 h-4" />
                         Log out
@@ -195,7 +195,7 @@ export function Navbar() {
 
           {/* Mobile: hamburger */}
           <button
-            className="md:hidden p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-light transition-colors"
+            className="md:hidden p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors"
             onClick={() => setMobileOpen((prev) => !prev)}
           >
             {mobileOpen ? (
@@ -209,7 +209,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-border-subtle bg-background/95 backdrop-blur-xl">
+        <div className="md:hidden border-t border-bg-border bg-bg/95 backdrop-blur-md">
           <div className="px-4 py-4 space-y-1">
             {navLinks.map((link) => (
               <Link
@@ -219,7 +219,7 @@ export function Navbar() {
                   "block px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                   isActive(link.href)
                     ? "bg-primary/15 text-primary"
-                    : "text-text-secondary hover:text-text-primary hover:bg-surface-light"
+                    : "text-text-secondary hover:text-text-primary hover:bg-bg-elevated"
                 )}
               >
                 {link.label}
@@ -228,7 +228,7 @@ export function Navbar() {
 
             {status === "authenticated" && user && (
               <>
-                <div className="pt-3 mt-3 border-t border-border-subtle space-y-2">
+                <div className="pt-3 mt-3 border-t border-bg-border space-y-2">
                   <div className="flex items-center gap-4 px-4">
                     <div className="flex items-center gap-1.5">
                       <Coins className="w-4 h-4 text-warning" />
@@ -245,7 +245,7 @@ export function Navbar() {
                   </div>
                   <Link
                     href="/profile"
-                    className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm text-text-secondary hover:text-text-primary hover:bg-surface-light transition-colors"
+                    className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors"
                   >
                     <User className="w-4 h-4" />
                     Profile
@@ -253,7 +253,7 @@ export function Navbar() {
                   {user.isAdmin && (
                     <Link
                       href="/admin"
-                      className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm text-text-secondary hover:text-text-primary hover:bg-surface-light transition-colors"
+                      className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors"
                     >
                       <Shield className="w-4 h-4" />
                       Admin
@@ -261,7 +261,7 @@ export function Navbar() {
                   )}
                   <button
                     onClick={() => signOut()}
-                    className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm text-red-400 hover:text-red-300 hover:bg-surface-light transition-colors w-full"
+                    className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm text-red-400 hover:text-red-300 hover:bg-bg-elevated transition-colors w-full"
                   >
                     <LogOut className="w-4 h-4" />
                     Log out
@@ -271,7 +271,7 @@ export function Navbar() {
             )}
 
             {status === "unauthenticated" && (
-              <div className="pt-3 mt-3 border-t border-border-subtle flex gap-2 px-4">
+              <div className="pt-3 mt-3 border-t border-bg-border flex gap-2 px-4">
                 <Link href="/login" className="flex-1">
                   <Button variant="ghost" size="sm" className="w-full">
                     Login

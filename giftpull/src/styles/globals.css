@@ -2,17 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #0B0F1A;
+  --bg-surface: #131929;
+  --bg-elevated: #1A2035;
+  --bg-border: #242C42;
+  --primary: #3B82F6;
+  --primary-hover: #2563EB;
+  --accent: #06B6D4;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --rarity-common: #6B7280;
+  --rarity-uncommon: #10B981;
+  --rarity-rare: #3B82F6;
+  --rarity-epic: #8B5CF6;
+  --rarity-legendary: #F59E0B;
+}
 
 @layer base {
   body {
-    @apply bg-background text-text-primary font-sans antialiased;
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    @apply antialiased;
   }
 }
 
 @layer components {
   .card-hover {
-    @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20;
+    @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover hover:border-primary/50;
   }
 
   .gradient-border {
@@ -23,13 +47,13 @@
   }
 
   .gradient-border-inner {
-    @apply bg-surface rounded-card;
+    @apply bg-bg-surface rounded-card;
   }
 
-  .rarity-common { @apply border-gray-500; }
-  .rarity-uncommon { @apply border-success; }
-  .rarity-rare { @apply border-primary; }
-  .rarity-epic { @apply border-epic; }
+  .rarity-common { @apply border-rarity-common; }
+  .rarity-uncommon { @apply border-rarity-uncommon; }
+  .rarity-rare { @apply border-rarity-rare; }
+  .rarity-epic { @apply border-rarity-epic; }
   .rarity-legendary {
     background: linear-gradient(135deg, #F59E0B, #EF4444);
     -webkit-background-clip: text;
@@ -43,14 +67,11 @@
   }
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-}
+/* Scrollbar styling for dark theme */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bg-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
 
-::-webkit-scrollbar-track {
-  @apply bg-background;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-surface-light rounded-full;
-}
+/* Selection color */
+::selection { background: rgba(59,130,246,0.3); color: #fff; }

@@ -9,17 +9,34 @@ export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
+    minimumFractionDigits: 2,
   }).format(amount);
 }
 
+export function formatUSDC(amount: number): string {
+  return `${amount.toFixed(2)} USDC`;
+}
+
 export function formatPoints(points: number): string {
-  return new Intl.NumberFormat("en-US").format(points);
+  return new Intl.NumberFormat("en-US").format(points) + " pts";
+}
+
+export function formatDiscount(original: number, sale: number): string {
+  const pct = Math.round(((original - sale) / original) * 100);
+  return `${pct}% OFF`;
+}
+
+export function formatEV(ev: number, cost: number): string {
+  const pct = (((ev - cost) / cost) * 100).toFixed(1);
+  return `+${pct}% EV`;
 }
 
 export function generateFakeCode(): string {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   const segment = () =>
-    Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+    Array.from({ length: 4 }, () =>
+      chars[Math.floor(Math.random() * chars.length)]
+    ).join("");
   return `${segment()}-${segment()}-${segment()}-${segment()}`;
 }
 
@@ -36,11 +53,11 @@ export function getRarityColor(rarity: string): string {
 
 export function getRarityBorderClass(rarity: string): string {
   const classes: Record<string, string> = {
-    COMMON: "border-gray-500",
-    UNCOMMON: "border-success",
-    RARE: "border-primary",
-    EPIC: "border-epic",
-    LEGENDARY: "border-warning",
+    COMMON: "border-rarity-common",
+    UNCOMMON: "border-rarity-uncommon",
+    RARE: "border-rarity-rare",
+    EPIC: "border-rarity-epic",
+    LEGENDARY: "border-rarity-legendary",
   };
   return classes[rarity] || classes.COMMON;
 }
@@ -50,8 +67,8 @@ export function getBrandColor(brand: string): string {
     XBOX: "#107C10",
     STEAM: "#1B2838",
     NINTENDO: "#E60012",
-    PLAYSTATION: "#003087",
-    GOOGLE_PLAY: "#01875F",
+    PLAYSTATION: "#003791",
+    GOOGLE_PLAY: "#4285F4",
     AMAZON: "#FF9900",
     APPLE: "#A2AAAD",
     ROBLOX: "#E2231A",

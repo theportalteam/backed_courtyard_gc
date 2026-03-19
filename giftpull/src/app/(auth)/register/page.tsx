@@ -61,14 +61,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0A0E1A] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-bg px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white">GiftPull</h1>
-          <p className="text-gray-400 mt-2">Create your account</p>
+          <h1 className="text-3xl font-bold text-text-primary">GiftPull</h1>
+          <p className="text-text-secondary mt-2">Create your account</p>
         </div>
 
-        <div className="bg-[#1A1F2E] rounded-2xl p-8 shadow-xl border border-white/5">
+        <div className="bg-bg-surface rounded-card p-8 shadow-xl border border-bg-border">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm">
@@ -77,7 +77,7 @@ export default function RegisterPage() {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-1.5">
                 Email
               </label>
               <input
@@ -87,12 +87,12 @@ export default function RegisterPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="you@example.com"
-                className="w-full px-4 py-3 bg-[#0A0E1A] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-bg border border-bg-border rounded-button text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition"
               />
             </div>
 
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1.5">
+              <label htmlFor="name" className="block text-sm font-medium text-text-secondary mb-1.5">
                 Display Name
               </label>
               <input
@@ -101,12 +101,12 @@ export default function RegisterPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="What should we call you?"
-                className="w-full px-4 py-3 bg-[#0A0E1A] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-bg border border-bg-border rounded-button text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-text-secondary mb-1.5">
                 Password
               </label>
               <input
@@ -116,12 +116,12 @@ export default function RegisterPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="At least 6 characters"
-                className="w-full px-4 py-3 bg-[#0A0E1A] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-bg border border-bg-border rounded-button text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition"
               />
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-1.5">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-text-secondary mb-1.5">
                 Confirm Password
               </label>
               <input
@@ -131,22 +131,22 @@ export default function RegisterPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 placeholder="Re-enter your password"
-                className="w-full px-4 py-3 bg-[#0A0E1A] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-bg border border-bg-border rounded-button text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition duration-200"
+              className="w-full py-3 px-4 bg-primary hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-button transition duration-200"
             >
               {loading ? "Creating account..." : "Create Account"}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-gray-400">
+          <p className="mt-6 text-center text-sm text-text-secondary">
             Already have an account?{" "}
-            <Link href="/login" className="text-blue-400 hover:text-blue-300 font-medium transition">
+            <Link href="/login" className="text-primary hover:text-primary-hover font-medium transition">
               Sign in
             </Link>
           </p>

@@ -157,7 +157,7 @@ export function RevealScreen({
           <span className="text-success font-bold text-base">
             {formatCurrency(buybackOffer)}
           </span>{" "}
-          <span className="text-text-secondary/60">(95% of face value)</span>
+          <span className="text-text-tertiary">(95% of face value)</span>
         </p>
       </motion.div>
 
@@ -210,7 +210,7 @@ export function RevealScreen({
           <Button
             variant="ghost"
             size="lg"
-            className="w-full border border-border-subtle hover:border-primary/30"
+            className="w-full border border-bg-border hover:border-primary/30"
             icon={<RefreshCw className="w-4 h-4" />}
             onClick={onPullAgain}
           >
@@ -240,7 +240,7 @@ function CardDisplay({
   const badgeVariant = (rarityBadgeVariant[card.rarity] || "default") as any;
 
   return (
-    <div className="bg-surface rounded-2xl p-6 relative overflow-hidden">
+    <div className="bg-bg-surface rounded-2xl p-6 relative overflow-hidden">
       {/* Background radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"

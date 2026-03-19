@@ -27,8 +27,8 @@ export function BrandFilter({ selectedBrand, onBrandChange }: BrandFilterProps) 
   return (
     <div className="relative">
       {/* Fade edges to indicate scroll */}
-      <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none" />
 
       <div
         ref={scrollRef}
@@ -42,7 +42,7 @@ export function BrandFilter({ selectedBrand, onBrandChange }: BrandFilterProps) 
             "shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
             selectedBrand === null
               ? "bg-primary text-white shadow-lg shadow-primary/25"
-              : "bg-surface-light text-text-secondary hover:text-text-primary hover:bg-surface-light/80 border border-border-subtle"
+              : "bg-bg-elevated text-text-secondary hover:text-text-primary hover:bg-bg-elevated/80 border border-bg-border"
           )}
         >
           <span
@@ -68,7 +68,7 @@ export function BrandFilter({ selectedBrand, onBrandChange }: BrandFilterProps) 
                 "shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
                 isActive
                   ? "text-white shadow-lg"
-                  : "bg-surface-light text-text-secondary hover:text-text-primary hover:bg-surface-light/80 border border-border-subtle"
+                  : "bg-bg-elevated text-text-secondary hover:text-text-primary hover:bg-bg-elevated/80 border border-bg-border"
               )}
               style={
                 isActive

@@ -85,7 +85,7 @@ const Modal: React.FC<ModalProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           {/* Backdrop */}
           <motion.div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             variants={backdropVariants}
             initial="hidden"
             animate="visible"
@@ -96,7 +96,7 @@ const Modal: React.FC<ModalProps> = ({
           {/* Modal Panel */}
           <motion.div
             className={cn(
-              "relative w-full bg-surface border border-border-subtle rounded-2xl shadow-2xl shadow-black/50",
+              "relative w-full bg-bg-surface border border-bg-border rounded-card shadow-2xl shadow-black/50",
               sizeStyles[size],
               className
             )}
@@ -107,13 +107,13 @@ const Modal: React.FC<ModalProps> = ({
           >
             {/* Header */}
             {title && (
-              <div className="flex items-center justify-between px-6 py-4 border-b border-border-subtle">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-bg-border">
                 <h2 className="text-lg font-semibold text-text-primary">
                   {title}
                 </h2>
                 <button
                   onClick={onClose}
-                  className="p-1.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-light transition-colors"
+                  className="p-1.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -124,7 +124,7 @@ const Modal: React.FC<ModalProps> = ({
             {!title && (
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-1.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-light transition-colors z-10"
+                className="absolute top-4 right-4 p-1.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors z-10"
               >
                 <X className="w-5 h-5" />
               </button>

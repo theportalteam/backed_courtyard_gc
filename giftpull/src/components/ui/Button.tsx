@@ -5,15 +5,15 @@ import { cn } from "@/lib/utils";
 
 const variantStyles = {
   primary:
-    "bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/25",
+    "bg-primary hover:bg-primary-hover text-white shadow-lg shadow-primary/25 rounded-button",
   secondary:
-    "bg-surface hover:bg-surface-light text-text-primary border border-border-subtle",
+    "bg-bg-surface hover:bg-bg-elevated text-text-primary border border-bg-border rounded-button",
   danger:
-    "bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/25",
+    "bg-danger hover:bg-red-700 text-white shadow-lg shadow-danger/25 rounded-button",
   ghost:
-    "bg-transparent hover:bg-surface-light text-text-secondary hover:text-text-primary",
+    "bg-transparent hover:bg-bg-elevated text-text-secondary hover:text-text-primary rounded-button",
   success:
-    "bg-success hover:bg-success/90 text-white shadow-lg shadow-success/25",
+    "bg-success hover:bg-success-hover text-white shadow-lg shadow-success/25 rounded-button",
 } as const;
 
 const sizeStyles = {
@@ -53,7 +53,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={cn(
           "inline-flex items-center justify-center font-semibold transition-all duration-200",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-bg",
           "active:scale-[0.97]",
           variantStyles[variant],
           sizeStyles[size],
