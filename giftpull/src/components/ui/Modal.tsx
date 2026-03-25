@@ -96,7 +96,7 @@ const Modal: React.FC<ModalProps> = ({
           {/* Modal Panel */}
           <motion.div
             className={cn(
-              "relative w-full bg-bg-surface border border-bg-border rounded-card shadow-2xl shadow-black/50",
+              "relative w-full bg-bg-surface border border-bg-border rounded-card border-t-2 border-t-primary shadow-2xl shadow-black/50",
               sizeStyles[size],
               className
             )}
