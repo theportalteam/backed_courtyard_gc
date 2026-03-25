@@ -40,7 +40,7 @@ export function BundleCard({ bundle }: BundleCardProps) {
         {/* Header */}
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-epic/10 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-none bg-epic/10 flex items-center justify-center shrink-0">
               <Package className="w-5 h-5 text-epic" />
             </div>
             <div>
@@ -70,7 +70,7 @@ export function BundleCard({ bundle }: BundleCardProps) {
               return (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between bg-bg-elevated/50 rounded-lg px-3 py-2"
+                  className="flex items-center justify-between bg-bg-elevated/50 rounded-none px-3 py-2"
                 >
                   <div className="flex items-center gap-2">
                     <span
@@ -111,7 +111,7 @@ export function BundleCard({ bundle }: BundleCardProps) {
         </div>
 
         {/* Savings callout */}
-        <div className="flex items-center gap-1.5 bg-success/10 border border-success/20 rounded-lg px-3 py-2 mb-4">
+        <div className="flex items-center gap-1.5 bg-success/10 border border-success/20 rounded-none px-3 py-2 mb-4">
           <Tag className="w-3.5 h-3.5 text-success shrink-0" />
           <span className="text-xs font-medium text-success">
             You save {formatCurrency(savings)}

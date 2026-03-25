@@ -58,12 +58,12 @@ export default function HomePage() {
       <section className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-28 sm:pb-24">
         <div className="text-center max-w-3xl mx-auto">
           <motion.h1
-            className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight"
+            className="text-5xl sm:text-6xl lg:text-7xl font-headline font-black uppercase tracking-tighter italic"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="bg-gradient-to-r from-primary via-epic to-warning bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary via-tertiary to-accent bg-clip-text text-transparent">
               GCPACKS
             </span>
           </motion.h1>
@@ -122,11 +122,11 @@ export default function HomePage() {
             >
               <Card variant="interactive" padding="lg" className="h-full">
                 <div
-                  className={`w-12 h-12 rounded-xl ${feature.bgGlow} flex items-center justify-center mb-5`}
+                  className={`w-12 h-12 rounded-none ${feature.bgGlow} flex items-center justify-center mb-5`}
                 >
                   <feature.icon className={`w-6 h-6 ${feature.color}`} />
                 </div>
-                <h3 className="text-lg font-bold text-text-primary mb-2">
+                <h3 className="text-lg font-headline font-bold uppercase tracking-tight text-text-primary mb-2">
                   {feature.title}
                 </h3>
                 <p className="text-sm text-text-secondary leading-relaxed">

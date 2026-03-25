@@ -108,7 +108,7 @@ export default function ContactPage() {
         <div className="space-y-4">
           <div className="bg-bg-surface border border-bg-border rounded-card p-5">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-8 rounded-lg bg-primary/15 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-none bg-primary/15 flex items-center justify-center">
                 <Mail className="w-4 h-4 text-primary" />
               </div>
               <h3 className="font-semibold text-text-primary text-sm">Email Support</h3>
@@ -122,7 +122,7 @@ export default function ContactPage() {
 
           <div className="bg-bg-surface border border-bg-border rounded-card p-5">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-8 rounded-lg bg-primary/15 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-none bg-primary/15 flex items-center justify-center">
                 <Clock className="w-4 h-4 text-primary" />
               </div>
               <h3 className="font-semibold text-text-primary text-sm">Response Time</h3>

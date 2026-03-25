@@ -209,12 +209,12 @@ export function ListingCard({ listing }: ListingCardProps) {
         </div>
 
         {/* Seller info */}
-        <div className="bg-surface-light/50 border border-border-subtle rounded-xl p-3 mb-4 relative">
+        <div className="bg-surface-light/50 border border-border-subtle rounded-none p-3 mb-4 relative">
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-2">
               <div
                 className={cn(
-                  "w-6 h-6 rounded-lg flex items-center justify-center",
+                  "w-6 h-6 rounded-none flex items-center justify-center",
                   tierConfig.bgColor
                 )}
               >

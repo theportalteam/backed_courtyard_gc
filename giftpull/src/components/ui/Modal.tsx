@@ -113,7 +113,7 @@ const Modal: React.FC<ModalProps> = ({
                 </h2>
                 <button
                   onClick={onClose}
-                  className="p-1.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors"
+                  className="p-1.5 rounded-none text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -124,7 +124,7 @@ const Modal: React.FC<ModalProps> = ({
             {!title && (
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-1.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors z-10"
+                className="absolute top-4 right-4 p-1.5 rounded-none text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors z-10"
               >
                 <X className="w-5 h-5" />
               </button>

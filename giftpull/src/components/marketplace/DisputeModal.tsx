@@ -104,7 +104,7 @@ export function DisputeModal({
             within 24-48 hours.
           </p>
 
-          <div className="bg-surface-light/50 border border-border-subtle rounded-xl p-4 mb-6 text-left">
+          <div className="bg-surface-light/50 border border-border-subtle rounded-none p-4 mb-6 text-left">
             <p className="text-xs text-text-secondary uppercase tracking-wider font-semibold mb-2">
               Dispute Reason
             </p>
@@ -124,7 +124,7 @@ export function DisputeModal({
     <Modal isOpen={isOpen} onClose={onClose} title="File a Dispute" size="md">
       <div>
         {/* Listing details */}
-        <div className="bg-surface-light/50 border border-border-subtle rounded-xl p-4 mb-6">
+        <div className="bg-surface-light/50 border border-border-subtle rounded-none p-4 mb-6">
           <div className="flex items-center justify-between mb-2">
             <div>
               <p className="text-sm font-semibold text-text-primary">
@@ -147,7 +147,7 @@ export function DisputeModal({
         </div>
 
         {/* Warning notice */}
-        <div className="flex items-start gap-2.5 bg-warning/5 border border-warning/20 rounded-xl px-4 py-3 mb-5">
+        <div className="flex items-start gap-2.5 bg-warning/5 border border-warning/20 rounded-none px-4 py-3 mb-5">
           <AlertTriangle className="w-4 h-4 text-warning shrink-0 mt-0.5" />
           <p className="text-xs text-text-secondary">
             Filing a dispute will freeze the transaction. Our team will review the
@@ -158,7 +158,7 @@ export function DisputeModal({
 
         {/* Error */}
         {error && (
-          <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 mb-5">
+          <div className="bg-red-500/10 border border-red-500/20 rounded-none px-4 py-3 mb-5">
             <p className="text-sm text-red-400">{error}</p>
           </div>
         )}
@@ -174,7 +174,7 @@ export function DisputeModal({
             placeholder="Describe the issue with this purchase. For example: the gift card code is invalid, the balance is incorrect, etc."
             rows={4}
             className={cn(
-              "w-full bg-surface-light border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary",
+              "w-full bg-surface-light border border-border-subtle rounded-none px-4 py-2.5 text-sm text-text-primary",
               "placeholder:text-text-secondary/50",
               "transition-all duration-200 resize-none",
               "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"

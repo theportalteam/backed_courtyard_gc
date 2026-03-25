@@ -96,10 +96,10 @@ export default function SellPage() {
         {/* Page Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-success/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-none bg-success/10 flex items-center justify-center">
               <Tag className="w-5 h-5 text-success" />
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-text-primary">
+            <h1 className="text-3xl sm:text-4xl font-headline font-black uppercase tracking-tighter italic text-text-primary">
               Sell a Gift Card
             </h1>
           </div>
@@ -129,7 +129,7 @@ export default function SellPage() {
                       <div className="relative">
                         <div
                           className={cn(
-                            "w-9 h-9 rounded-lg flex items-center justify-center shrink-0",
+                            "w-9 h-9 rounded-none flex items-center justify-center shrink-0",
                             step.bgColor
                           )}
                         >
@@ -166,7 +166,7 @@ export default function SellPage() {
                     <div
                       key={tier.tier}
                       className={cn(
-                        "flex items-center justify-between p-3 rounded-xl border",
+                        "flex items-center justify-between p-3 rounded-none border",
                         tier.bgColor,
                         tier.borderColor
                       )}

@@ -84,7 +84,7 @@ export function StatsCard({
 
         {/* Icon container */}
         <div
-          className="flex items-center justify-center w-11 h-11 rounded-xl shrink-0"
+          className="flex items-center justify-center w-11 h-11 rounded-none shrink-0"
           style={{
             backgroundColor: `${color}20`,
             color: color,

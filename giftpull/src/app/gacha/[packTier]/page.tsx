@@ -401,7 +401,7 @@ export default function PackDetailPage() {
                 >
                   {pack.tier}
                 </Badge>
-                <h1 className="text-4xl font-extrabold text-text-primary mt-3 mb-2">
+                <h1 className="text-4xl font-headline font-black uppercase tracking-tighter italic text-text-primary mt-3 mb-2">
                   {pack.name}
                 </h1>
                 <div className="flex items-center justify-center gap-4 text-sm">
@@ -475,7 +475,7 @@ export default function PackDetailPage() {
                     <h3 className="text-sm font-bold text-text-primary uppercase tracking-wider mb-3">
                       Card Pool
                     </h3>
-                    <p className="text-2xl font-extrabold text-text-primary mb-3">
+                    <p className="text-2xl font-headline font-black uppercase tracking-tighter italic text-text-primary mb-3">
                       {pack.poolStats.totalCards}{" "}
                       <span className="text-sm text-text-secondary font-normal">cards available</span>
                     </p>
@@ -507,7 +507,7 @@ export default function PackDetailPage() {
                   <Card variant="default" padding="lg">
                     {/* CC lock status */}
                     {isAuthenticated && !ccUnlocked && (
-                      <div className="flex items-center gap-2 mb-4 p-3 rounded-xl bg-warning/10 border border-warning/20">
+                      <div className="flex items-center gap-2 mb-4 p-3 rounded-none bg-warning/10 border border-warning/20">
                         <Lock className="w-4 h-4 text-warning shrink-0" />
                         <p className="text-xs text-warning">
                           Complete your first pull with <strong>Points</strong> to unlock credit card purchases
@@ -516,7 +516,7 @@ export default function PackDetailPage() {
                     )}
 
                     {isAuthenticated && ccUnlocked && (
-                      <div className="flex items-center gap-2 mb-4 p-3 rounded-xl bg-success/10 border border-success/20">
+                      <div className="flex items-center gap-2 mb-4 p-3 rounded-none bg-success/10 border border-success/20">
                         <Unlock className="w-4 h-4 text-success shrink-0" />
                         <p className="text-xs text-success">
                           Credit card unlocked for {pack.tier} packs
@@ -534,7 +534,7 @@ export default function PackDetailPage() {
                         onClick={() => ccUnlocked && setPaymentMethod("STRIPE")}
                         disabled={!ccUnlocked}
                         className={cn(
-                          "flex flex-col items-center gap-2 p-3 rounded-xl border-2 transition-all duration-200",
+                          "flex flex-col items-center gap-2 p-3 rounded-none border-2 transition-all duration-200",
                           !ccUnlocked && "opacity-40 cursor-not-allowed",
                           paymentMethod === "STRIPE" && ccUnlocked
                             ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
@@ -543,7 +543,7 @@ export default function PackDetailPage() {
                       >
                         <div
                           className={cn(
-                            "w-9 h-9 rounded-lg flex items-center justify-center",
+                            "w-9 h-9 rounded-none flex items-center justify-center",
                             paymentMethod === "STRIPE" && ccUnlocked
                               ? "bg-primary/15"
                               : "bg-surface"
@@ -579,7 +579,7 @@ export default function PackDetailPage() {
                         onClick={() => ccUnlocked && setPaymentMethod("USDC")}
                         disabled={!ccUnlocked}
                         className={cn(
-                          "flex flex-col items-center gap-2 p-3 rounded-xl border-2 transition-all duration-200",
+                          "flex flex-col items-center gap-2 p-3 rounded-none border-2 transition-all duration-200",
                           !ccUnlocked && "opacity-40 cursor-not-allowed",
                           paymentMethod === "USDC" && ccUnlocked
                             ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
@@ -588,7 +588,7 @@ export default function PackDetailPage() {
                       >
                         <div
                           className={cn(
-                            "w-9 h-9 rounded-lg flex items-center justify-center",
+                            "w-9 h-9 rounded-none flex items-center justify-center",
                             paymentMethod === "USDC" && ccUnlocked
                               ? "bg-primary/15"
                               : "bg-surface"
@@ -625,7 +625,7 @@ export default function PackDetailPage() {
                         }}
                         disabled={!hasEnoughPoints}
                         className={cn(
-                          "flex flex-col items-center gap-2 p-3 rounded-xl border-2 transition-all duration-200",
+                          "flex flex-col items-center gap-2 p-3 rounded-none border-2 transition-all duration-200",
                           paymentMethod === "POINTS"
                             ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
                             : "border-border-subtle bg-surface-light/50 hover:border-border-subtle/80",
@@ -634,7 +634,7 @@ export default function PackDetailPage() {
                       >
                         <div
                           className={cn(
-                            "w-9 h-9 rounded-lg flex items-center justify-center",
+                            "w-9 h-9 rounded-none flex items-center justify-center",
                             paymentMethod === "POINTS"
                               ? "bg-primary/15"
                               : "bg-surface"

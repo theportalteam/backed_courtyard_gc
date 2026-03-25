@@ -43,18 +43,18 @@ function SkeletonCard() {
         <div className="h-6 w-20 bg-surface-light rounded-full" />
         <div className="h-4 w-14 bg-surface-light rounded-full" />
       </div>
-      <div className="h-6 w-40 bg-surface-light rounded-lg mb-3" />
+      <div className="h-6 w-40 bg-surface-light rounded-none mb-3" />
       <div className="h-px w-full bg-surface-light mb-3" />
       <div className="flex items-end justify-between mb-3">
-        <div className="h-8 w-24 bg-surface-light rounded-lg" />
+        <div className="h-8 w-24 bg-surface-light rounded-none" />
         <div className="h-5 w-20 bg-surface-light rounded-full" />
       </div>
-      <div className="bg-surface-light rounded-xl p-3 mb-4">
-        <div className="h-4 w-full bg-surface rounded-lg mb-2" />
-        <div className="h-3 w-24 bg-surface rounded-lg" />
+      <div className="bg-surface-light rounded-none p-3 mb-4">
+        <div className="h-4 w-full bg-surface rounded-none mb-2" />
+        <div className="h-3 w-24 bg-surface rounded-none" />
       </div>
-      <div className="h-3 w-16 bg-surface-light rounded-lg mb-4" />
-      <div className="h-10 w-full bg-surface-light rounded-xl" />
+      <div className="h-3 w-16 bg-surface-light rounded-none mb-4" />
+      <div className="h-10 w-full bg-surface-light rounded-none" />
     </div>
   );
 }
@@ -117,10 +117,10 @@ export default function MarketplacePage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-none bg-primary/10 flex items-center justify-center">
                 <Store className="w-5 h-5 text-primary" />
               </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-text-primary">
+              <h1 className="text-3xl sm:text-4xl font-headline font-black uppercase tracking-tighter italic text-text-primary">
                 P2P Marketplace
               </h1>
             </div>
@@ -211,7 +211,7 @@ export default function MarketplacePage() {
           <button
             onClick={() => setShowPriceFilter(!showPriceFilter)}
             className={cn(
-              "inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 border",
+              "inline-flex items-center gap-2 px-4 py-2.5 rounded-none text-sm font-medium transition-all duration-200 border",
               showPriceFilter
                 ? "bg-primary/10 border-primary/30 text-primary"
                 : "bg-surface-light border-border-subtle text-text-secondary hover:text-text-primary"
@@ -232,7 +232,7 @@ export default function MarketplacePage() {
                 value={minPrice}
                 onChange={(e) => setMinPrice(e.target.value)}
                 className={cn(
-                  "w-24 bg-surface-light border border-border-subtle rounded-xl px-3 py-2 text-sm text-text-primary",
+                  "w-24 bg-surface-light border border-border-subtle rounded-none px-3 py-2 text-sm text-text-primary",
                   "placeholder:text-text-secondary/50",
                   "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary",
                   "transition-all duration-200"
@@ -247,7 +247,7 @@ export default function MarketplacePage() {
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
                 className={cn(
-                  "w-24 bg-surface-light border border-border-subtle rounded-xl px-3 py-2 text-sm text-text-primary",
+                  "w-24 bg-surface-light border border-border-subtle rounded-none px-3 py-2 text-sm text-text-primary",
                   "placeholder:text-text-secondary/50",
                   "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary",
                   "transition-all duration-200"
@@ -265,7 +265,7 @@ export default function MarketplacePage() {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
               className={cn(
-                "bg-surface-light border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary",
+                "bg-surface-light border border-border-subtle rounded-none px-4 py-2.5 text-sm text-text-primary",
                 "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary",
                 "transition-all duration-200 cursor-pointer appearance-none pr-8"
               )}
@@ -288,7 +288,7 @@ export default function MarketplacePage() {
           </div>
         ) : listings.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16">
-            <div className="w-16 h-16 rounded-2xl bg-surface-light flex items-center justify-center mb-4">
+            <div className="w-16 h-16 rounded-none bg-surface-light flex items-center justify-center mb-4">
               <ShoppingBag className="w-8 h-8 text-text-secondary" />
             </div>
             <h3 className="text-lg font-semibold text-text-primary mb-1">

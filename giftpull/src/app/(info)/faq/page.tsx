@@ -128,7 +128,7 @@ function Accordion({ item }: { item: FAQItem }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border border-bg-border rounded-lg overflow-hidden">
+    <div className="border border-bg-border rounded-none overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-bg-elevated/50 transition-colors"

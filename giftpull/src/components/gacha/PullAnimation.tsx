@@ -410,7 +410,7 @@ export function PullAnimation({
                 >
                   {/* Pack glow aura */}
                   <motion.div
-                    className="absolute inset-0 rounded-2xl pointer-events-none"
+                    className="absolute inset-0 rounded-none pointer-events-none"
                     style={{
                       boxShadow: `0 0 ${40 + buildProgress * 80}px ${hintColor}60, 0 0 ${20 + buildProgress * 40}px ${hintColor}30`,
                     }}
@@ -428,7 +428,7 @@ export function PullAnimation({
 
                   {/* The pack itself */}
                   <motion.div
-                    className="relative w-56 h-80 sm:w-64 sm:h-96 rounded-2xl overflow-hidden"
+                    className="relative w-56 h-80 sm:w-64 sm:h-96 rounded-none overflow-hidden"
                     style={{
                       background: `linear-gradient(145deg, #1b1b20, #2a292f)`,
                       border: `2px solid ${hintColor}50`,
@@ -447,7 +447,7 @@ export function PullAnimation({
                   >
                     {/* Inner glow */}
                     <div
-                      className="absolute inset-0 rounded-2xl"
+                      className="absolute inset-0 rounded-none"
                       style={{
                         background: `radial-gradient(circle at 50% 50%, ${hintColor}15, transparent 70%)`,
                       }}
@@ -673,7 +673,7 @@ export function PullAnimation({
                 >
                   {/* Card outer glow */}
                   <div
-                    className="absolute -inset-4 rounded-3xl pointer-events-none blur-xl"
+                    className="absolute -inset-4 rounded-none pointer-events-none blur-xl"
                     style={{
                       backgroundColor: `${rarityColor}30`,
                     }}
@@ -682,7 +682,7 @@ export function PullAnimation({
                   {/* Legendary animated gradient border */}
                   {rarityTier === "LEGENDARY" ? (
                     <div
-                      className="relative p-[3px] rounded-2xl"
+                      className="relative p-[3px] rounded-none"
                       style={{
                         background: `linear-gradient(135deg, #ffb1c3, #7d00ff, #d5bbff, #ffb1c3)`,
                         backgroundSize: "300% 300%",
@@ -698,7 +698,7 @@ export function PullAnimation({
                     </div>
                   ) : (
                     <div
-                      className="relative rounded-2xl"
+                      className="relative rounded-none"
                       style={{
                         border: `2px solid ${rarityColor}`,
                         boxShadow: `0 0 30px ${rarityColor}40, 0 0 60px ${rarityColor}20`,
@@ -716,7 +716,7 @@ export function PullAnimation({
                   {/* UNCOMMON+ glow ring */}
                   {rarityTier !== "COMMON" && (
                     <motion.div
-                      className="absolute inset-0 rounded-2xl pointer-events-none"
+                      className="absolute inset-0 rounded-none pointer-events-none"
                       style={{
                         boxShadow: `0 0 40px ${rarityColor}50`,
                       }}
@@ -772,7 +772,7 @@ function RevealCardInner({
   cardDenomination: number;
 }) {
   return (
-    <div className="w-56 sm:w-64 bg-bg-surface rounded-2xl p-6 text-center relative overflow-hidden">
+    <div className="w-56 sm:w-64 bg-bg-surface rounded-none p-6 text-center relative overflow-hidden">
       {/* Inner radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"

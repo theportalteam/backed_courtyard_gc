@@ -172,7 +172,7 @@ function UsersContent() {
         {/* ── Header ─────────────────────────────────── */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-text-primary">User Management</h1>
+            <h1 className="text-3xl font-headline font-black uppercase tracking-tighter italic text-text-primary">User Management</h1>
             <p className="text-text-secondary text-sm mt-1">
               {pagination.total} registered users
             </p>
@@ -196,7 +196,7 @@ function UsersContent() {
 
         {/* ── Success banner ─────────────────────────── */}
         {adjustSuccess && (
-          <div className="mb-4 p-3 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 text-[#10B981] text-sm font-medium">
+          <div className="mb-4 p-3 rounded-none bg-[#10B981]/15 border border-[#10B981]/30 text-[#10B981] text-sm font-medium">
             {adjustSuccess}
           </div>
         )}
@@ -300,31 +300,31 @@ function UsersContent() {
                                         User Details
                                       </h4>
                                       <div className="grid grid-cols-2 gap-3">
-                                        <div className="p-3 rounded-lg bg-surface">
+                                        <div className="p-3 rounded-none bg-surface">
                                           <p className="text-xs text-text-secondary">Transactions</p>
                                           <p className="text-lg font-bold text-text-primary">
                                             {user._count.transactions}
                                           </p>
                                         </div>
-                                        <div className="p-3 rounded-lg bg-surface">
+                                        <div className="p-3 rounded-none bg-surface">
                                           <p className="text-xs text-text-secondary">Gacha Pulls</p>
                                           <p className="text-lg font-bold text-text-primary">
                                             {user._count.pullHistory}
                                           </p>
                                         </div>
-                                        <div className="p-3 rounded-lg bg-surface">
+                                        <div className="p-3 rounded-none bg-surface">
                                           <p className="text-xs text-text-secondary">Total Sales</p>
                                           <p className="text-lg font-bold text-text-primary">
                                             {user.totalSales}
                                           </p>
                                         </div>
-                                        <div className="p-3 rounded-lg bg-surface">
+                                        <div className="p-3 rounded-none bg-surface">
                                           <p className="text-xs text-text-secondary">Login Streak</p>
                                           <p className="text-lg font-bold text-text-primary">
                                             {user.loginStreak} days
                                           </p>
                                         </div>
-                                        <div className="p-3 rounded-lg bg-surface">
+                                        <div className="p-3 rounded-none bg-surface">
                                           <p className="text-xs text-text-secondary">Rating</p>
                                           <p className="text-lg font-bold text-text-primary">
                                             {user.sellerRating !== null
@@ -332,7 +332,7 @@ function UsersContent() {
                                               : "N/A"}
                                           </p>
                                         </div>
-                                        <div className="p-3 rounded-lg bg-surface">
+                                        <div className="p-3 rounded-none bg-surface">
                                           <p className="text-xs text-text-secondary">Last Login</p>
                                           <p className="text-sm font-semibold text-text-primary">
                                             {user.lastLoginAt
@@ -348,7 +348,7 @@ function UsersContent() {
                                       <h4 className="text-sm font-semibold text-text-primary mb-3">
                                         Adjust Points
                                       </h4>
-                                      <div className="p-4 rounded-xl bg-surface border border-border-subtle">
+                                      <div className="p-4 rounded-none bg-surface border border-border-subtle">
                                         <div className="flex items-center gap-2 mb-3">
                                           <p className="text-sm text-text-secondary">
                                             Current balance:

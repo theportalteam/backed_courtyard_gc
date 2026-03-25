@@ -265,7 +265,7 @@ function GachaConfigContent() {
         {/* ── Header ─────────────────────────────────── */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-text-primary">Gacha Configuration</h1>
+            <h1 className="text-3xl font-headline font-black uppercase tracking-tighter italic text-text-primary">Gacha Configuration</h1>
             <p className="text-text-secondary text-sm mt-1">
               Manage pack pricing, odds, and activation
             </p>
@@ -298,7 +298,7 @@ function GachaConfigContent() {
               return (
                 <div
                   key={`ev-${pack.id}`}
-                  className="p-4 rounded-xl bg-surface-light"
+                  className="p-4 rounded-none bg-surface-light"
                 >
                   <div className="flex items-center justify-between mb-2">
                     <span
@@ -353,14 +353,14 @@ function GachaConfigContent() {
               <Card key={pack.id} padding="sm">
                 {/* Pack header row */}
                 <div
-                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-surface-light/30 transition-colors rounded-xl"
+                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-surface-light/30 transition-colors rounded-none"
                   onClick={() =>
                     setExpandedPack(isExpanded ? null : pack.id)
                   }
                 >
                   <div className="flex items-center gap-4">
                     <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-white text-lg"
+                      className="w-12 h-12 rounded-none flex items-center justify-center font-bold text-white text-lg"
                       style={{
                         backgroundColor: tierColors[pack.tier] || "#d5bbff",
                       }}
@@ -523,7 +523,7 @@ function GachaConfigContent() {
                                     type="number"
                                     step="0.1"
                                     min="0"
-                                    className="w-24 text-right bg-surface-light border border-border-subtle rounded-lg px-2 py-1 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                    className="w-24 text-right bg-surface-light border border-border-subtle rounded-none px-2 py-1 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
                                     value={
                                       editedWeights[odd.id] !== undefined
                                         ? editedWeights[odd.id]
@@ -545,7 +545,7 @@ function GachaConfigContent() {
                                     type="number"
                                     step="0.5"
                                     min="0"
-                                    className="w-24 text-right bg-surface-light border border-border-subtle rounded-lg px-2 py-1 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                    className="w-24 text-right bg-surface-light border border-border-subtle rounded-none px-2 py-1 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
                                     value={
                                       editedValues[odd.id] !== undefined
                                         ? editedValues[odd.id]

@@ -131,24 +131,24 @@ function AdminDashboardContent() {
         {/* ── Header ─────────────────────────────────── */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-text-primary">Admin Dashboard</h1>
+            <h1 className="text-3xl font-headline font-black uppercase tracking-tighter italic text-text-primary">Admin Dashboard</h1>
             <p className="text-text-secondary text-sm mt-1">
               Platform overview and analytics
             </p>
           </div>
           <div className="flex gap-3">
             <a href="/admin/inventory">
-              <button className="px-4 py-2 bg-surface hover:bg-surface-light text-text-primary text-sm font-semibold rounded-xl border border-border-subtle transition-colors">
+              <button className="px-4 py-2 bg-surface hover:bg-surface-light text-text-primary text-sm font-semibold rounded-none border border-border-subtle transition-colors">
                 Inventory
               </button>
             </a>
             <a href="/admin/gacha">
-              <button className="px-4 py-2 bg-surface hover:bg-surface-light text-text-primary text-sm font-semibold rounded-xl border border-border-subtle transition-colors">
+              <button className="px-4 py-2 bg-surface hover:bg-surface-light text-text-primary text-sm font-semibold rounded-none border border-border-subtle transition-colors">
                 Gacha Config
               </button>
             </a>
             <a href="/admin/users">
-              <button className="px-4 py-2 bg-surface hover:bg-surface-light text-text-primary text-sm font-semibold rounded-xl border border-border-subtle transition-colors">
+              <button className="px-4 py-2 bg-surface hover:bg-surface-light text-text-primary text-sm font-semibold rounded-none border border-border-subtle transition-colors">
                 Users
               </button>
             </a>
@@ -263,10 +263,10 @@ function AdminDashboardContent() {
             {topBrands.map((brand, idx) => (
               <div
                 key={brand.label}
-                className="flex flex-col items-center p-4 rounded-xl bg-surface-light"
+                className="flex flex-col items-center p-4 rounded-none bg-surface-light"
               >
                 <div
-                  className="w-10 h-10 rounded-xl mb-2 flex items-center justify-center text-white font-bold text-lg"
+                  className="w-10 h-10 rounded-none mb-2 flex items-center justify-center text-white font-bold text-lg"
                   style={{ backgroundColor: brand.color }}
                 >
                   {brand.label[0]}

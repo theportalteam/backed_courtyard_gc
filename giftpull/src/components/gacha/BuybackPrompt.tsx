@@ -118,7 +118,7 @@ export function BuybackPrompt({
 
           {/* Credited amount */}
           <motion.div
-            className="bg-success/8 border border-success/20 rounded-xl p-4 mb-4"
+            className="bg-success/8 border border-success/20 rounded-none p-4 mb-4"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -133,7 +133,7 @@ export function BuybackPrompt({
 
           {/* New balance */}
           <motion.div
-            className="bg-bg-elevated/50 border border-bg-border rounded-xl p-4 mb-6"
+            className="bg-bg-elevated/50 border border-bg-border rounded-none p-4 mb-6"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -182,7 +182,7 @@ export function BuybackPrompt({
         {/* Card details */}
         <div className="flex items-center gap-3 mb-5 pb-4 border-b border-bg-border">
           <div
-            className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+            className="w-11 h-11 rounded-none flex items-center justify-center shrink-0"
             style={{ backgroundColor: `${brandColor}20` }}
           >
             <Wallet className="w-5 h-5" style={{ color: brandColor }} />
@@ -212,7 +212,7 @@ export function BuybackPrompt({
         </div>
 
         {/* Buyback amount */}
-        <div className="bg-success/8 border border-success/20 rounded-xl p-4 mb-4 text-center">
+        <div className="bg-success/8 border border-success/20 rounded-none p-4 mb-4 text-center">
           <p className="text-xs text-text-secondary uppercase tracking-wider font-semibold mb-1">
             You will receive
           </p>
@@ -225,7 +225,7 @@ export function BuybackPrompt({
         </div>
 
         {/* Balance change */}
-        <div className="bg-bg-elevated/50 border border-bg-border rounded-xl p-4 mb-6">
+        <div className="bg-bg-elevated/50 border border-bg-border rounded-none p-4 mb-6">
           <div className="flex items-center justify-between text-sm">
             <span className="text-text-secondary">Current USDC Balance</span>
             <span className="text-text-primary font-medium">
@@ -254,7 +254,7 @@ export function BuybackPrompt({
 
         {/* Error message */}
         {error && (
-          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 mb-4 text-sm text-red-400">
+          <div className="bg-red-500/10 border border-red-500/20 rounded-none p-3 mb-4 text-sm text-red-400">
             {error}
           </div>
         )}

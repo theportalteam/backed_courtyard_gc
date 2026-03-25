@@ -13,7 +13,7 @@ function GuaranteeCard({ icon: Icon, title, children }: {
   return (
     <div className="bg-bg-surface border border-bg-border rounded-card p-6">
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-9 h-9 rounded-lg bg-success/15 flex items-center justify-center">
+        <div className="w-9 h-9 rounded-none bg-success/15 flex items-center justify-center">
           <Icon className="w-5 h-5 text-success" />
         </div>
         <h3 className="text-lg font-semibold text-text-primary">{title}</h3>
@@ -103,7 +103,7 @@ export default function GuaranteePage() {
       <section>
         <div className="bg-bg-surface border border-bg-border rounded-card p-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-9 h-9 rounded-lg bg-warning/15 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-none bg-warning/15 flex items-center justify-center">
               <AlertTriangle className="w-5 h-5 text-warning" />
             </div>
             <h3 className="text-lg font-semibold text-text-primary">What&apos;s Not Covered</h3>

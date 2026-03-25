@@ -153,13 +153,13 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
               <p className="text-xs text-text-secondary uppercase tracking-wider font-semibold mb-2">
                 Your Card Code
               </p>
-              <div className="relative inline-flex items-center gap-2 bg-bg-elevated border border-bg-border rounded-xl px-5 py-3">
+              <div className="relative inline-flex items-center gap-2 bg-bg-elevated border border-bg-border rounded-none px-5 py-3">
                 <code className="text-lg font-mono font-bold text-text-primary tracking-widest select-all">
                   {revealedCode}
                 </code>
                 <button
                   onClick={handleCopy}
-                  className="p-1.5 rounded-lg hover:bg-bg-elevated transition-colors text-text-secondary hover:text-text-primary"
+                  className="p-1.5 rounded-none hover:bg-bg-elevated transition-colors text-text-secondary hover:text-text-primary"
                   title="Copy code"
                 >
                   {copied ? (
@@ -176,7 +176,7 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
           )}
 
           {type === "bundle" && (
-            <div className="mb-6 bg-bg-elevated/50 border border-bg-border rounded-xl p-4">
+            <div className="mb-6 bg-bg-elevated/50 border border-bg-border rounded-none p-4">
               <p className="text-sm text-text-secondary">
                 Your bundle codes have been delivered to your account. Visit your{" "}
                 <span className="text-primary font-medium">Profile</span> to view
@@ -217,7 +217,7 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
         {/* Item details */}
         <div className="flex items-center gap-3 mb-6 pb-5 border-b border-bg-border">
           <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+            className="w-12 h-12 rounded-none flex items-center justify-center shrink-0"
             style={{ backgroundColor: `${brandColor}20` }}
           >
             <ShoppingBag className="w-6 h-6" style={{ color: brandColor }} />
@@ -257,7 +257,7 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
             <button
               onClick={() => setSelectedMethod("STRIPE")}
               className={cn(
-                "flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200",
+                "flex flex-col items-center gap-2 p-4 rounded-none border-2 transition-all duration-200",
                 selectedMethod === "STRIPE"
                   ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
                   : "border-bg-border bg-bg-elevated/50 hover:border-bg-border/80 hover:bg-bg-elevated"
@@ -265,7 +265,7 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
             >
               <div
                 className={cn(
-                  "w-10 h-10 rounded-lg flex items-center justify-center",
+                  "w-10 h-10 rounded-none flex items-center justify-center",
                   selectedMethod === "STRIPE" ? "bg-primary/15" : "bg-bg-surface"
                 )}
               >
@@ -294,7 +294,7 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
             <button
               onClick={() => setSelectedMethod("USDC")}
               className={cn(
-                "flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200",
+                "flex flex-col items-center gap-2 p-4 rounded-none border-2 transition-all duration-200",
                 selectedMethod === "USDC"
                   ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
                   : "border-bg-border bg-bg-elevated/50 hover:border-bg-border/80 hover:bg-bg-elevated"
@@ -302,7 +302,7 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
             >
               <div
                 className={cn(
-                  "w-10 h-10 rounded-lg flex items-center justify-center",
+                  "w-10 h-10 rounded-none flex items-center justify-center",
                   selectedMethod === "USDC" ? "bg-primary/15" : "bg-bg-surface"
                 )}
               >
@@ -341,7 +341,7 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
                 }
               }}
               className={cn(
-                "flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200",
+                "flex flex-col items-center gap-2 p-4 rounded-none border-2 transition-all duration-200",
                 selectedMethod === "POINTS"
                   ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
                   : "border-bg-border bg-bg-elevated/50 hover:border-bg-border/80 hover:bg-bg-elevated",
@@ -351,7 +351,7 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
             >
               <div
                 className={cn(
-                  "w-10 h-10 rounded-lg flex items-center justify-center",
+                  "w-10 h-10 rounded-none flex items-center justify-center",
                   selectedMethod === "POINTS" ? "bg-primary/15" : "bg-bg-surface"
                 )}
               >
@@ -385,7 +385,7 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
         </div>
 
         {/* Summary */}
-        <div className="bg-bg-elevated/50 border border-bg-border rounded-xl p-4 mb-6">
+        <div className="bg-bg-elevated/50 border border-bg-border rounded-none p-4 mb-6">
           <div className="flex items-center justify-between text-sm">
             <span className="text-text-secondary">Item</span>
             <span className="text-text-primary font-medium">{item.name}</span>

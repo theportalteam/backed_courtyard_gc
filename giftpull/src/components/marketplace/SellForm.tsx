@@ -194,7 +194,7 @@ export function SellForm({ className }: SellFormProps) {
           live on the marketplace.
         </p>
 
-        <div className="bg-surface-light/50 border border-border-subtle rounded-xl p-4 mb-6 text-left">
+        <div className="bg-surface-light/50 border border-border-subtle rounded-none p-4 mb-6 text-left">
           <div className="flex items-center justify-between text-sm mb-2">
             <span className="text-text-secondary">Asking Price</span>
             <span className="text-text-primary font-semibold">
@@ -283,7 +283,7 @@ export function SellForm({ className }: SellFormProps) {
       <form onSubmit={handleSubmit}>
         {/* Error */}
         {error && (
-          <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 mb-6">
+          <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-none px-4 py-3 mb-6">
             <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
             <p className="text-sm text-red-400">{error}</p>
           </div>
@@ -298,7 +298,7 @@ export function SellForm({ className }: SellFormProps) {
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
             className={cn(
-              "w-full bg-surface-light border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary",
+              "w-full bg-surface-light border border-border-subtle rounded-none px-4 py-2.5 text-sm text-text-primary",
               "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary",
               "transition-all duration-200 cursor-pointer appearance-none",
               !brand && "text-text-secondary/50"
@@ -342,7 +342,7 @@ export function SellForm({ className }: SellFormProps) {
               onChange={(e) => setCode(e.target.value)}
               placeholder="XXXX-XXXX-XXXX-XXXX"
               className={cn(
-                "w-full bg-surface-light border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary pl-10 pr-10",
+                "w-full bg-surface-light border border-border-subtle rounded-none px-4 py-2.5 text-sm text-text-primary pl-10 pr-10",
                 "placeholder:text-text-secondary/50",
                 "transition-all duration-200",
                 "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary",
@@ -365,7 +365,7 @@ export function SellForm({ className }: SellFormProps) {
 
         {/* Suggested price info */}
         {denomValue > 0 && (
-          <div className="bg-primary/5 border border-primary/20 rounded-xl px-4 py-3 mb-5">
+          <div className="bg-primary/5 border border-primary/20 rounded-none px-4 py-3 mb-5">
             <div className="flex items-center gap-2 mb-1">
               <Tag className="w-4 h-4 text-primary" />
               <span className="text-sm font-semibold text-primary">
@@ -398,7 +398,7 @@ export function SellForm({ className }: SellFormProps) {
 
         {/* Commission breakdown */}
         {priceValue > 0 && (
-          <div className="bg-surface-light/50 border border-border-subtle rounded-xl p-4 mb-6">
+          <div className="bg-surface-light/50 border border-border-subtle rounded-none p-4 mb-6">
             <div className="flex items-center justify-between text-sm mb-2">
               <span className="text-text-secondary">Asking Price</span>
               <span className="text-text-primary font-medium">

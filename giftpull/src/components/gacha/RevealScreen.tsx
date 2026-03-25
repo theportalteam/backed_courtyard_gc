@@ -93,7 +93,7 @@ export function RevealScreen({
       <div className="mb-6">
         {isLegendary ? (
           <div
-            className="p-[3px] rounded-2xl mx-auto"
+            className="p-[3px] rounded-none mx-auto"
             style={{
               background:
                 "linear-gradient(135deg, #ffb1c3, #7d00ff, #d5bbff)",
@@ -110,7 +110,7 @@ export function RevealScreen({
           </div>
         ) : (
           <div
-            className="rounded-2xl mx-auto"
+            className="rounded-none mx-auto"
             style={{
               border: `2px solid ${rarityColor}`,
               boxShadow: `0 0 25px ${rarityColor}30`,
@@ -134,7 +134,7 @@ export function RevealScreen({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.15, type: "spring", stiffness: 200 }}
         >
-          <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 text-center">
+          <div className="bg-primary/10 border border-primary/30 rounded-none p-4 text-center">
             <div className="flex items-center justify-center gap-2 mb-1">
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-bold text-primary">
@@ -166,7 +166,7 @@ export function RevealScreen({
 
       {/* Buyback offer */}
       <motion.div
-        className="bg-success/8 border border-success/20 rounded-xl p-4 mb-6"
+        className="bg-success/8 border border-success/20 rounded-none p-4 mb-6"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
@@ -265,7 +265,7 @@ function CardDisplay({
   const badgeVariant = (rarityBadgeVariant[card.rarity] || "default") as any;
 
   return (
-    <div className="bg-bg-surface rounded-2xl p-6 relative overflow-hidden">
+    <div className="bg-bg-surface rounded-none p-6 relative overflow-hidden">
       {/* Background radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"

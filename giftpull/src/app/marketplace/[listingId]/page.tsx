@@ -143,26 +143,26 @@ function RatingStars({ rating }: { rating: number | null }) {
 function LoadingSkeleton() {
   return (
     <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <div className="h-4 w-32 bg-surface-light rounded-lg mb-6 animate-pulse" />
+      <div className="h-4 w-32 bg-surface-light rounded-none mb-6 animate-pulse" />
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         <div className="lg:col-span-3">
           <div className="bg-surface rounded-card border border-border-subtle p-7 animate-pulse">
             <div className="h-6 w-24 bg-surface-light rounded-full mb-4" />
-            <div className="h-8 w-64 bg-surface-light rounded-lg mb-4" />
+            <div className="h-8 w-64 bg-surface-light rounded-none mb-4" />
             <div className="h-px w-full bg-surface-light mb-4" />
-            <div className="h-10 w-32 bg-surface-light rounded-lg mb-6" />
-            <div className="bg-surface-light rounded-xl p-4 mb-6">
-              <div className="h-5 w-full bg-surface rounded-lg mb-2" />
-              <div className="h-4 w-32 bg-surface rounded-lg" />
+            <div className="h-10 w-32 bg-surface-light rounded-none mb-6" />
+            <div className="bg-surface-light rounded-none p-4 mb-6">
+              <div className="h-5 w-full bg-surface rounded-none mb-2" />
+              <div className="h-4 w-32 bg-surface rounded-none" />
             </div>
-            <div className="h-12 w-full bg-surface-light rounded-xl" />
+            <div className="h-12 w-full bg-surface-light rounded-none" />
           </div>
         </div>
         <div className="lg:col-span-2">
           <div className="bg-surface rounded-card border border-border-subtle p-5 animate-pulse">
-            <div className="h-5 w-24 bg-surface-light rounded-lg mb-4" />
-            <div className="h-12 w-full bg-surface-light rounded-xl mb-3" />
-            <div className="h-4 w-32 bg-surface-light rounded-lg" />
+            <div className="h-5 w-24 bg-surface-light rounded-none mb-4" />
+            <div className="h-12 w-full bg-surface-light rounded-none mb-3" />
+            <div className="h-4 w-32 bg-surface-light rounded-none" />
           </div>
         </div>
       </div>
@@ -346,7 +346,7 @@ export default function ListingDetailPage() {
         </Link>
 
         <div className="flex flex-col items-center justify-center py-16">
-          <div className="w-16 h-16 rounded-2xl bg-surface-light flex items-center justify-center mb-4">
+          <div className="w-16 h-16 rounded-none bg-surface-light flex items-center justify-center mb-4">
             <AlertTriangle className="w-8 h-8 text-warning" />
           </div>
           <h3 className="text-lg font-semibold text-text-primary mb-1">
@@ -390,7 +390,7 @@ export default function ListingDetailPage() {
 
         {/* Error banner */}
         {error && (
-          <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 mb-6">
+          <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-none px-4 py-3 mb-6">
             <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
             <p className="text-sm text-red-400">{error}</p>
           </div>
@@ -479,7 +479,7 @@ export default function ListingDetailPage() {
 
               {/* Card code reveal for buyer (if SOLD) */}
               {isBuyer && isSold && listing.giftCard.code && (
-                <div className="bg-surface-light/50 border border-success/20 rounded-xl p-5 mb-6">
+                <div className="bg-surface-light/50 border border-success/20 rounded-none p-5 mb-6">
                   <p className="text-xs text-text-secondary uppercase tracking-wider font-semibold mb-2">
                     Your Card Code
                   </p>
@@ -489,7 +489,7 @@ export default function ListingDetailPage() {
                     </code>
                     <button
                       onClick={handleCopyCode}
-                      className="p-2 rounded-lg hover:bg-surface transition-colors text-text-secondary hover:text-text-primary"
+                      className="p-2 rounded-none hover:bg-surface transition-colors text-text-secondary hover:text-text-primary"
                       title="Copy code"
                     >
                       {codeCopied ? (
@@ -534,7 +534,7 @@ export default function ListingDetailPage() {
 
               {/* Confirmed notice */}
               {confirmed && (
-                <div className="flex items-center gap-2 bg-success/10 border border-success/20 rounded-xl px-4 py-3 mb-6">
+                <div className="flex items-center gap-2 bg-success/10 border border-success/20 rounded-none px-4 py-3 mb-6">
                   <Check className="w-5 h-5 text-success" />
                   <p className="text-sm text-success font-medium">
                     Card confirmed! Transaction complete.
@@ -544,7 +544,7 @@ export default function ListingDetailPage() {
 
               {/* Dispute notice */}
               {listing.disputeStatus === "OPEN" && (
-                <div className="flex items-start gap-2.5 bg-warning/10 border border-warning/20 rounded-xl px-4 py-3 mb-6">
+                <div className="flex items-start gap-2.5 bg-warning/10 border border-warning/20 rounded-none px-4 py-3 mb-6">
                   <AlertTriangle className="w-5 h-5 text-warning shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm text-warning font-semibold mb-1">
@@ -583,7 +583,7 @@ export default function ListingDetailPage() {
 
               {/* Owner notice */}
               {isOwner && isActive && (
-                <div className="bg-surface-light/50 border border-border-subtle rounded-xl px-4 py-3">
+                <div className="bg-surface-light/50 border border-border-subtle rounded-none px-4 py-3">
                   <p className="text-sm text-text-secondary">
                     This is your listing. It will expire on{" "}
                     {new Date(listing.expiresAt).toLocaleDateString()}.
@@ -603,7 +603,7 @@ export default function ListingDetailPage() {
               <div className="flex items-center gap-3 mb-4">
                 <div
                   className={cn(
-                    "w-12 h-12 rounded-xl flex items-center justify-center",
+                    "w-12 h-12 rounded-none flex items-center justify-center",
                     tierConfig.bgColor
                   )}
                 >
@@ -694,7 +694,7 @@ export default function ListingDetailPage() {
             {/* Item details */}
             <div className="flex items-center gap-3 mb-6 pb-5 border-b border-border-subtle">
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                className="w-12 h-12 rounded-none flex items-center justify-center shrink-0"
                 style={{ backgroundColor: `${brandColor}20` }}
               >
                 <ShoppingCart className="w-6 h-6" style={{ color: brandColor }} />
@@ -734,7 +734,7 @@ export default function ListingDetailPage() {
                 <button
                   onClick={() => setSelectedPayment("STRIPE")}
                   className={cn(
-                    "flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200",
+                    "flex flex-col items-center gap-2 p-4 rounded-none border-2 transition-all duration-200",
                     selectedPayment === "STRIPE"
                       ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
                       : "border-border-subtle bg-surface-light/50 hover:border-border-subtle/80 hover:bg-surface-light"
@@ -742,7 +742,7 @@ export default function ListingDetailPage() {
                 >
                   <div
                     className={cn(
-                      "w-10 h-10 rounded-lg flex items-center justify-center",
+                      "w-10 h-10 rounded-none flex items-center justify-center",
                       selectedPayment === "STRIPE" ? "bg-primary/15" : "bg-surface"
                     )}
                   >
@@ -767,7 +767,7 @@ export default function ListingDetailPage() {
                 <button
                   onClick={() => setSelectedPayment("USDC_BASE")}
                   className={cn(
-                    "flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200",
+                    "flex flex-col items-center gap-2 p-4 rounded-none border-2 transition-all duration-200",
                     selectedPayment === "USDC_BASE"
                       ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
                       : "border-border-subtle bg-surface-light/50 hover:border-border-subtle/80 hover:bg-surface-light"
@@ -775,7 +775,7 @@ export default function ListingDetailPage() {
                 >
                   <div
                     className={cn(
-                      "w-10 h-10 rounded-lg flex items-center justify-center",
+                      "w-10 h-10 rounded-none flex items-center justify-center",
                       selectedPayment === "USDC_BASE" ? "bg-primary/15" : "bg-surface"
                     )}
                   >
@@ -808,7 +808,7 @@ export default function ListingDetailPage() {
                     if (hasEnoughPoints) setSelectedPayment("POINTS");
                   }}
                   className={cn(
-                    "flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200",
+                    "flex flex-col items-center gap-2 p-4 rounded-none border-2 transition-all duration-200",
                     selectedPayment === "POINTS"
                       ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
                       : "border-border-subtle bg-surface-light/50 hover:border-border-subtle/80 hover:bg-surface-light",
@@ -818,7 +818,7 @@ export default function ListingDetailPage() {
                 >
                   <div
                     className={cn(
-                      "w-10 h-10 rounded-lg flex items-center justify-center",
+                      "w-10 h-10 rounded-none flex items-center justify-center",
                       selectedPayment === "POINTS" ? "bg-primary/15" : "bg-surface"
                     )}
                   >
@@ -848,7 +848,7 @@ export default function ListingDetailPage() {
             </div>
 
             {/* Summary */}
-            <div className="bg-surface-light/50 border border-border-subtle rounded-xl p-4 mb-6">
+            <div className="bg-surface-light/50 border border-border-subtle rounded-none p-4 mb-6">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-text-secondary">Item</span>
                 <span className="text-text-primary font-medium">

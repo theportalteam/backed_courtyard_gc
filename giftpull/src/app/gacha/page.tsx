@@ -97,24 +97,24 @@ function PackSkeleton() {
   return (
     <div className="bg-bg-surface border border-bg-border rounded-card p-7 animate-pulse">
       <div className="flex justify-between mb-4">
-        <div className="h-6 w-32 bg-bg-elevated rounded-lg" />
+        <div className="h-6 w-32 bg-bg-elevated rounded-none" />
         <div className="h-5 w-16 bg-bg-elevated rounded-full" />
       </div>
       <div className="text-center mb-5">
-        <div className="h-14 w-24 bg-bg-elevated rounded-lg mx-auto mb-2" />
+        <div className="h-14 w-24 bg-bg-elevated rounded-none mx-auto mb-2" />
         <div className="h-4 w-20 bg-bg-elevated rounded mx-auto" />
       </div>
-      <div className="bg-bg-elevated/60 rounded-xl p-5 mb-4">
+      <div className="bg-bg-elevated/60 rounded-none p-5 mb-4">
         <div className="h-3 w-20 bg-bg-elevated rounded mx-auto mb-2" />
         <div className="h-7 w-16 bg-bg-elevated rounded mx-auto" />
       </div>
-      <div className="h-9 w-full bg-bg-elevated rounded-lg mb-4" />
+      <div className="h-9 w-full bg-bg-elevated rounded-none mb-4" />
       <div className="flex justify-center gap-1 mb-5">
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="w-2.5 h-2.5 bg-bg-elevated rounded-full" />
         ))}
       </div>
-      <div className="h-12 w-full bg-bg-elevated rounded-xl" />
+      <div className="h-12 w-full bg-bg-elevated rounded-none" />
     </div>
   );
 }
@@ -224,10 +224,10 @@ export default function GachaPage() {
           transition={{ duration: 0.5 }}
         >
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-epic/15 border border-epic/30 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-none bg-epic/15 border border-epic/30 flex items-center justify-center">
               <Dice5 className="w-6 h-6 text-epic" />
             </div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-text-primary">
+            <h1 className="text-4xl sm:text-5xl font-headline font-black uppercase tracking-tighter italic text-text-primary">
               GCPACKS
             </h1>
           </div>
@@ -328,7 +328,7 @@ export default function GachaPage() {
           <div className="h-px bg-gradient-to-r from-transparent via-bg-border to-transparent mb-8" />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
             <div className="text-center">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-2">
+              <div className="w-10 h-10 rounded-none bg-primary/10 flex items-center justify-center mx-auto mb-2">
                 <Sparkles className="w-5 h-5 text-primary" />
               </div>
               <p className="text-sm font-semibold text-text-primary mb-1">
@@ -339,7 +339,7 @@ export default function GachaPage() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center mx-auto mb-2">
+              <div className="w-10 h-10 rounded-none bg-success/10 flex items-center justify-center mx-auto mb-2">
                 <TrendingUp className="w-5 h-5 text-success" />
               </div>
               <p className="text-sm font-semibold text-text-primary mb-1">
@@ -350,7 +350,7 @@ export default function GachaPage() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-10 h-10 rounded-lg bg-warning/10 flex items-center justify-center mx-auto mb-2">
+              <div className="w-10 h-10 rounded-none bg-warning/10 flex items-center justify-center mx-auto mb-2">
                 <Wallet className="w-5 h-5 text-warning" />
               </div>
               <p className="text-sm font-semibold text-text-primary mb-1">

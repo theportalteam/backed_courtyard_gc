@@ -162,7 +162,7 @@ export default function LeaderboardPage() {
           <div className="flex flex-col items-center text-center gap-4">
             <div className="flex items-center gap-3">
               <Trophy className="w-10 h-10 text-warning" />
-              <h1 className="text-4xl font-extrabold bg-gradient-to-r from-warning via-primary to-epic bg-clip-text text-transparent">
+              <h1 className="text-4xl font-headline font-black uppercase tracking-tighter italic bg-gradient-to-r from-primary via-tertiary to-accent bg-clip-text text-transparent">
                 Leaderboard
               </h1>
             </div>
@@ -176,7 +176,7 @@ export default function LeaderboardPage() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-4 mt-2 px-6 py-3 bg-bg-surface/80 rounded-xl border border-primary/30 backdrop-blur-sm"
+                className="flex items-center gap-4 mt-2 px-6 py-3 bg-bg-surface/80 rounded-none border border-primary/30 backdrop-blur-sm"
               >
                 <div className="text-center">
                   <p className="text-xs text-text-secondary">Your Rank</p>
@@ -198,13 +198,13 @@ export default function LeaderboardPage() {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
         {/* Period Tabs + Countdown */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 bg-bg-surface rounded-xl border border-bg-border p-1">
+          <div className="flex items-center gap-2 bg-bg-surface rounded-none border border-bg-border p-1">
             {(["WEEKLY", "MONTHLY"] as Period[]).map((p) => (
               <button
                 key={p}
                 onClick={() => setPeriod(p)}
                 className={cn(
-                  "px-5 py-2.5 rounded-lg text-sm font-medium transition-all",
+                  "px-5 py-2.5 rounded-none text-sm font-medium transition-all",
                   period === p
                     ? "bg-primary text-white shadow-md"
                     : "text-text-secondary hover:text-text-primary hover:bg-bg-elevated"
@@ -216,7 +216,7 @@ export default function LeaderboardPage() {
           </div>
 
           {countdown > 0 && (
-            <div className="flex items-center gap-2 px-4 py-2 bg-bg-surface rounded-xl border border-bg-border">
+            <div className="flex items-center gap-2 px-4 py-2 bg-bg-surface rounded-none border border-bg-border">
               <Clock className="w-4 h-4 text-text-secondary" />
               <span className="text-sm text-text-secondary">Ends in</span>
               <span className="text-sm font-bold text-primary font-mono">
@@ -241,7 +241,7 @@ export default function LeaderboardPage() {
                 {prizes.map((prize) => (
                   <div
                     key={prize.id}
-                    className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-bg-elevated/50"
+                    className="flex items-center justify-between px-3 py-2.5 rounded-none bg-bg-elevated/50"
                   >
                     <div className="flex items-center gap-2">
                       {prize.rankMin === 1 && prize.rankMax === 1 ? (
@@ -328,7 +328,7 @@ export default function LeaderboardPage() {
               {loading && (
                 <div className="space-y-2 p-4">
                   {Array.from({ length: 10 }).map((_, i) => (
-                    <div key={i} className="h-14 bg-bg-elevated rounded-lg animate-pulse" />
+                    <div key={i} className="h-14 bg-bg-elevated rounded-none animate-pulse" />
                   ))}
                 </div>
               )}

@@ -38,14 +38,14 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-bg px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-text-primary">GCPACKS</h1>
+          <h1 className="text-3xl font-headline font-black uppercase tracking-tighter italic text-text-primary">GCPACKS</h1>
           <p className="text-text-secondary mt-2">Sign in to your account</p>
         </div>
 
         <div className="bg-bg-surface rounded-card p-8 shadow-xl border border-bg-border">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm">
+              <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-none text-sm">
                 {error}
               </div>
             )}

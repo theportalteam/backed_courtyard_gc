@@ -25,12 +25,12 @@ function SkeletonCard() {
         <div className="h-6 w-20 bg-bg-elevated rounded-full" />
         <div className="h-5 w-16 bg-bg-elevated rounded-full" />
       </div>
-      <div className="h-6 w-48 bg-bg-elevated rounded-lg mb-4" />
+      <div className="h-6 w-48 bg-bg-elevated rounded-none mb-4" />
       <div className="h-px w-full bg-bg-elevated mb-4" />
       <div className="flex items-end justify-between mb-5">
-        <div className="h-8 w-24 bg-bg-elevated rounded-lg" />
+        <div className="h-8 w-24 bg-bg-elevated rounded-none" />
       </div>
-      <div className="h-10 w-full bg-bg-elevated rounded-xl" />
+      <div className="h-10 w-full bg-bg-elevated rounded-none" />
     </div>
   );
 }
@@ -39,17 +39,17 @@ function SkeletonBundle() {
   return (
     <div className="bg-bg-surface rounded-card border border-bg-border p-5 animate-pulse">
       <div className="flex items-center gap-2.5 mb-4">
-        <div className="w-10 h-10 bg-bg-elevated rounded-xl" />
+        <div className="w-10 h-10 bg-bg-elevated rounded-none" />
         <div>
-          <div className="h-5 w-32 bg-bg-elevated rounded-lg mb-1" />
-          <div className="h-3 w-48 bg-bg-elevated rounded-lg" />
+          <div className="h-5 w-32 bg-bg-elevated rounded-none mb-1" />
+          <div className="h-3 w-48 bg-bg-elevated rounded-none" />
         </div>
       </div>
       <div className="space-y-2 mb-4">
-        <div className="h-8 w-full bg-bg-elevated rounded-lg" />
-        <div className="h-8 w-full bg-bg-elevated rounded-lg" />
+        <div className="h-8 w-full bg-bg-elevated rounded-none" />
+        <div className="h-8 w-full bg-bg-elevated rounded-none" />
       </div>
-      <div className="h-10 w-full bg-bg-elevated rounded-xl" />
+      <div className="h-10 w-full bg-bg-elevated rounded-none" />
     </div>
   );
 }
@@ -147,10 +147,10 @@ export default function StorefrontPage() {
         {/* Page Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-none bg-primary/10 flex items-center justify-center">
               <ShoppingBag className="w-5 h-5 text-primary" />
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-text-primary">
+            <h1 className="text-3xl sm:text-4xl font-headline font-black uppercase tracking-tighter italic text-text-primary">
               Gift Card Storefront
             </h1>
           </div>
@@ -184,7 +184,7 @@ export default function StorefrontPage() {
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
                 className={cn(
-                  "bg-bg-elevated border border-bg-border rounded-xl px-4 py-2.5 text-sm text-text-primary",
+                  "bg-bg-elevated border border-bg-border rounded-none px-4 py-2.5 text-sm text-text-primary",
                   "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary",
                   "transition-all duration-200 cursor-pointer appearance-none pr-8"
                 )}
@@ -208,7 +208,7 @@ export default function StorefrontPage() {
           </div>
         ) : filteredCards.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16">
-            <div className="w-16 h-16 rounded-2xl bg-bg-elevated flex items-center justify-center mb-4">
+            <div className="w-16 h-16 rounded-none bg-bg-elevated flex items-center justify-center mb-4">
               <ShoppingBag className="w-8 h-8 text-text-secondary" />
             </div>
             <h3 className="text-lg font-semibold text-text-primary mb-1">
@@ -242,11 +242,11 @@ export default function StorefrontPage() {
         {/* Bundles Section */}
         <div className="mt-16">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-epic/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-none bg-epic/10 flex items-center justify-center">
               <PackageOpen className="w-5 h-5 text-epic" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-text-primary">Bundles</h2>
+              <h2 className="text-2xl font-headline font-bold uppercase tracking-tight text-text-primary">Bundles</h2>
               <p className="text-sm text-text-secondary">
                 Save more with curated gift card bundles
               </p>

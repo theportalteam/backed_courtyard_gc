@@ -71,7 +71,7 @@ function StatSkeleton() {
   return (
     <div className="bg-bg-surface border border-bg-border rounded-card p-5 animate-pulse">
       <div className="flex items-center gap-2 mb-3">
-        <div className="w-8 h-8 bg-bg-elevated rounded-lg" />
+        <div className="w-8 h-8 bg-bg-elevated rounded-none" />
         <div className="h-3 w-20 bg-bg-elevated rounded" />
       </div>
       <div className="h-8 w-24 bg-bg-elevated rounded" />
@@ -84,7 +84,7 @@ function PullSkeleton() {
     <div className="bg-bg-surface border border-bg-border rounded-card p-4 animate-pulse">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-bg-elevated rounded-lg" />
+          <div className="w-10 h-10 bg-bg-elevated rounded-none" />
           <div>
             <div className="h-4 w-28 bg-bg-elevated rounded mb-2" />
             <div className="h-3 w-20 bg-bg-elevated rounded" />
@@ -251,11 +251,11 @@ export default function HistoryPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <div className="w-12 h-12 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-none bg-primary/15 border border-primary/30 flex items-center justify-center">
             <History className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h1 className="text-3xl font-extrabold text-text-primary">
+            <h1 className="text-3xl font-headline font-black uppercase tracking-tighter italic text-text-primary">
               Pull History
             </h1>
             <p className="text-sm text-text-secondary">
@@ -280,14 +280,14 @@ export default function HistoryPage() {
             >
               <Card variant="default" padding="md">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-none bg-red-500/10 flex items-center justify-center">
                     <DollarSign className="w-4 h-4 text-red-400" />
                   </div>
                   <span className="text-xs text-text-secondary font-medium">
                     Total Spent
                   </span>
                 </div>
-                <p className="text-2xl font-extrabold text-text-primary">
+                <p className="text-2xl font-headline font-black uppercase tracking-tighter italic text-text-primary">
                   {formatCurrency(stats.totalSpent)}
                 </p>
               </Card>
@@ -300,7 +300,7 @@ export default function HistoryPage() {
             >
               <Card variant="default" padding="md">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-none bg-success/10 flex items-center justify-center">
                     <TrendingUp className="w-4 h-4 text-success" />
                   </div>
                   <span className="text-xs text-text-secondary font-medium">
@@ -320,7 +320,7 @@ export default function HistoryPage() {
             >
               <Card variant="default" padding="md">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-lg bg-warning/10 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-none bg-warning/10 flex items-center justify-center">
                     <Trophy className="w-4 h-4 text-warning" />
                   </div>
                   <span className="text-xs text-text-secondary font-medium">
@@ -340,14 +340,14 @@ export default function HistoryPage() {
             >
               <Card variant="default" padding="md">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-lg bg-epic/10 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-none bg-epic/10 flex items-center justify-center">
                     <Hash className="w-4 h-4 text-epic" />
                   </div>
                   <span className="text-xs text-text-secondary font-medium">
                     Total Pulls
                   </span>
                 </div>
-                <p className="text-2xl font-extrabold text-text-primary">
+                <p className="text-2xl font-headline font-black uppercase tracking-tighter italic text-text-primary">
                   {stats.totalPulls}
                 </p>
               </Card>
@@ -436,7 +436,7 @@ export default function HistoryPage() {
                       {/* Left: brand icon + details */}
                       <div className="flex items-center gap-3 min-w-0">
                         <div
-                          className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                          className="w-10 h-10 rounded-none flex items-center justify-center shrink-0"
                           style={{ backgroundColor: `${brandColor}20` }}
                         >
                           <span

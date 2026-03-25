@@ -187,7 +187,7 @@ function InventoryContent() {
         {/* ── Header ─────────────────────────────────── */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-text-primary">Gift Card Inventory</h1>
+            <h1 className="text-3xl font-headline font-black uppercase tracking-tighter italic text-text-primary">Gift Card Inventory</h1>
             <p className="text-text-secondary text-sm mt-1">
               {pagination.total} total cards in the system
             </p>
@@ -213,7 +213,7 @@ function InventoryContent() {
               <select
                 value={filterBrand}
                 onChange={(e) => setFilterBrand(e.target.value)}
-                className="w-full bg-surface-light border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full bg-surface-light border border-border-subtle rounded-none px-4 py-2.5 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
               >
                 <option value="">All Brands</option>
                 {BRANDS.filter(Boolean).map((b) => (
@@ -231,7 +231,7 @@ function InventoryContent() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full bg-surface-light border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full bg-surface-light border border-border-subtle rounded-none px-4 py-2.5 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
               >
                 <option value="">All Statuses</option>
                 {STATUSES.filter(Boolean).map((s) => (
@@ -247,7 +247,7 @@ function InventoryContent() {
               <select
                 value={filterSource}
                 onChange={(e) => setFilterSource(e.target.value)}
-                className="w-full bg-surface-light border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full bg-surface-light border border-border-subtle rounded-none px-4 py-2.5 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
               >
                 <option value="">All Sources</option>
                 {SOURCES.filter(Boolean).map((s) => (
@@ -386,7 +386,7 @@ function InventoryContent() {
               <select
                 value={addBrand}
                 onChange={(e) => setAddBrand(e.target.value)}
-                className="w-full bg-surface-light border border-border-subtle rounded-xl px-4 py-2.5 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full bg-surface-light border border-border-subtle rounded-none px-4 py-2.5 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
               >
                 {BRANDS.filter(Boolean).map((b) => (
                   <option key={b} value={b}>
@@ -406,7 +406,7 @@ function InventoryContent() {
                     key={d}
                     onClick={() => setAddDenom(String(d))}
                     className={cn(
-                      "px-3 py-2 rounded-lg text-sm font-semibold border transition-colors",
+                      "px-3 py-2 rounded-none text-sm font-semibold border transition-colors",
                       addDenom === String(d)
                         ? "border-primary bg-primary/15 text-primary"
                         : "border-border-subtle bg-surface-light text-text-secondary hover:text-text-primary"

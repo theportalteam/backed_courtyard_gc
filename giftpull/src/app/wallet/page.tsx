@@ -261,7 +261,7 @@ export default function WalletPage() {
             <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-primary/10 blur-2xl" />
             <div className="relative">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-none bg-primary/20 flex items-center justify-center">
                   <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -292,7 +292,7 @@ export default function WalletPage() {
             <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-[#7d00ff]/10 blur-2xl" />
             <div className="relative">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-[#7d00ff]/20 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-none bg-[#7d00ff]/20 flex items-center justify-center">
                   <svg className="w-6 h-6 text-[#7d00ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                   </svg>
@@ -313,11 +313,11 @@ export default function WalletPage() {
         </div>
 
         {/* ── Tab Switcher ───────────────────────────── */}
-        <div className="flex gap-1 p-1 bg-surface rounded-xl mb-6 w-fit">
+        <div className="flex gap-1 p-1 bg-surface rounded-none mb-6 w-fit">
           <button
             onClick={() => setActiveTab("transactions")}
             className={cn(
-              "px-5 py-2 rounded-lg text-sm font-semibold transition-all",
+              "px-5 py-2 rounded-none text-sm font-semibold transition-all",
               activeTab === "transactions"
                 ? "bg-primary text-white shadow-lg shadow-primary/25"
                 : "text-text-secondary hover:text-text-primary"
@@ -328,7 +328,7 @@ export default function WalletPage() {
           <button
             onClick={() => setActiveTab("points")}
             className={cn(
-              "px-5 py-2 rounded-lg text-sm font-semibold transition-all",
+              "px-5 py-2 rounded-none text-sm font-semibold transition-all",
               activeTab === "points"
                 ? "bg-[#7d00ff] text-white shadow-lg shadow-[#7d00ff]/25"
                 : "text-text-secondary hover:text-text-primary"
@@ -534,7 +534,7 @@ export default function WalletPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="p-3 bg-surface-light rounded-xl">
+            <div className="p-3 bg-surface-light rounded-none">
               <p className="text-xs text-text-secondary mb-0.5">Available Balance</p>
               <p className="text-lg font-bold text-text-primary">
                 {formatCurrency(usdcBalance)} USDC
