@@ -53,7 +53,7 @@ export function Footer() {
 
         <div className="border-t border-bg-border mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-text-tertiary">
-            &copy; {new Date().getFullYear()} GiftPull. All rights reserved.
+            &copy; {new Date().getFullYear()} GCPACKS. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-text-tertiary text-xs">
             <span>Visa</span>

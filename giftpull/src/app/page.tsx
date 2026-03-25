@@ -64,7 +64,7 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
           >
             <span className="bg-gradient-to-r from-primary via-epic to-warning bg-clip-text text-transparent">
-              GiftPull
+              GCPACKS
             </span>
           </motion.h1>
 

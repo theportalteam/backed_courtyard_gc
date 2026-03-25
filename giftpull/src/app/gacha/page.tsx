@@ -228,7 +228,7 @@ export default function GachaPage() {
               <Dice5 className="w-6 h-6 text-epic" />
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-text-primary">
-              GiftPull
+              GCPACKS
             </h1>
           </div>
 

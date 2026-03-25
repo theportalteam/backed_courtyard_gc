@@ -20,11 +20,11 @@ const faqData: FAQCategory[] = [
     name: "General",
     items: [
       {
-        q: "What is GiftPull?",
-        a: "GiftPull is a gift card platform with three ways to shop: a discount Storefront, randomized Gacha Packs with positive expected value, and a peer-to-peer Marketplace with escrow protection.",
+        q: "What is GCPACKS?",
+        a: "GCPACKS is a gift card platform with three ways to shop: a discount Storefront, randomized Gacha Packs with positive expected value, and a peer-to-peer Marketplace with escrow protection.",
       },
       {
-        q: "Is GiftPull legitimate?",
+        q: "Is GCPACKS legitimate?",
         a: "Yes. All gift cards are sourced from authorized distributors. Every storefront purchase is backed by our validity guarantee, and marketplace transactions are protected by escrow.",
       },
       {
@@ -67,7 +67,7 @@ const faqData: FAQCategory[] = [
       },
       {
         q: "How does buyback work?",
-        a: "After revealing your pull, click 'Buyback' to instantly sell the card back to GiftPull at the displayed rate. The credit is added to your wallet immediately.",
+        a: "After revealing your pull, click 'Buyback' to instantly sell the card back to GCPACKS at the displayed rate. The credit is added to your wallet immediately.",
       },
     ],
   },
@@ -80,11 +80,11 @@ const faqData: FAQCategory[] = [
       },
       {
         q: "How does escrow work?",
-        a: "When a buyer makes a purchase, their payment is held securely by GiftPull. The buyer has 24 hours to verify the code. If verified, funds release to the seller. If disputed, our team investigates.",
+        a: "When a buyer makes a purchase, their payment is held securely by GCPACKS. The buyer has 24 hours to verify the code. If verified, funds release to the seller. If disputed, our team investigates.",
       },
       {
-        q: "What fees does GiftPull charge?",
-        a: "GiftPull charges a small platform fee on completed marketplace transactions. The exact fee is displayed before you confirm a listing or purchase.",
+        q: "What fees does GCPACKS charge?",
+        a: "GCPACKS charges a small platform fee on completed marketplace transactions. The exact fee is displayed before you confirm a listing or purchase.",
       },
     ],
   },
@@ -97,7 +97,7 @@ const faqData: FAQCategory[] = [
       },
       {
         q: "What is the wallet?",
-        a: "Your GiftPull wallet holds credits from buybacks, refunds, and marketplace sales. Wallet balance can be used for any purchase on the platform.",
+        a: "Your GCPACKS wallet holds credits from buybacks, refunds, and marketplace sales. Wallet balance can be used for any purchase on the platform.",
       },
       {
         q: "Can I withdraw my wallet balance?",
@@ -154,7 +154,7 @@ export default function FAQPage() {
   return (
     <InfoPageLayout
       title="Frequently Asked Questions"
-      subtitle="Find answers to the most common questions about GiftPull."
+      subtitle="Find answers to the most common questions about GCPACKS."
     >
       <div className="space-y-10">
         {faqData.map((category) => (

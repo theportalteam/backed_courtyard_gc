@@ -100,7 +100,7 @@ export async function executeGachaPull(
 
     const checkoutSession = await createCheckoutSession({
       amount: pack.price,
-      description: `${pack.name} - GiftPull Pack`,
+      description: `${pack.name} - GCPACKS Pack`,
       metadata: {
         packTier: pack.tier,
         userId,
@@ -141,7 +141,7 @@ export async function executeGachaPull(
     await redeemPoints({
       userId,
       amount: pack.pointsCost,
-      description: `GiftPull pack: ${pack.name}`,
+      description: `GCPACKS pack: ${pack.name}`,
     });
   }
 
@@ -276,7 +276,7 @@ export async function executeGachaPull(
           amount: pointsEarned,
           type: "GACHA_EARN",
           multiplier: pointsMultiplier,
-          description: `GiftPull: ${pack.name} (${selectedOdds.rarityTier})`,
+          description: `GCPACKS: ${pack.name} (${selectedOdds.rarityTier})`,
           transactionId: transaction.id,
         },
       });

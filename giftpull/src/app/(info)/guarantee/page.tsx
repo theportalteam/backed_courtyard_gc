@@ -2,7 +2,7 @@ import { InfoPageLayout } from "@/components/layout/InfoPageLayout";
 import { Shield, ShoppingBag, Sparkles, Users, AlertTriangle } from "lucide-react";
 
 export const metadata = {
-  title: "Buyer Protection Guarantee — GiftPull",
+  title: "Buyer Protection Guarantee — GCPACKS",
 };
 
 function GuaranteeCard({ icon: Icon, title, children }: {
@@ -29,12 +29,12 @@ export default function GuaranteePage() {
   return (
     <InfoPageLayout
       title="Buyer Protection Guarantee"
-      subtitle="Every purchase on GiftPull is backed by our comprehensive protection program."
+      subtitle="Every purchase on GCPACKS is backed by our comprehensive protection program."
     >
       <section>
         <h2>What&apos;s Covered</h2>
         <p>
-          Our Buyer Protection Guarantee ensures that every gift card you receive through GiftPull
+          Our Buyer Protection Guarantee ensures that every gift card you receive through GCPACKS
           is valid and matches its listed denomination. If something goes wrong, we make it right.
         </p>
       </section>

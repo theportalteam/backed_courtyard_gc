@@ -2,7 +2,7 @@ import { InfoPageLayout } from "@/components/layout/InfoPageLayout";
 import { Sparkles, Eye, RefreshCw, Shield } from "lucide-react";
 
 export const metadata = {
-  title: "About — GiftPull",
+  title: "About — GCPACKS",
 };
 
 function ValueCard({ icon: Icon, title, description }: {
@@ -24,18 +24,18 @@ function ValueCard({ icon: Icon, title, description }: {
 export default function AboutPage() {
   return (
     <InfoPageLayout
-      title="About GiftPull"
+      title="About GCPACKS"
       subtitle="The gift card marketplace where every pull has value."
     >
       <section>
         <h2>Our Story</h2>
         <p>
-          GiftPull started with a simple observation: the gift card market is broken. Buyers
+          GCPACKS started with a simple observation: the gift card market is broken. Buyers
           overpay, sellers get lowballed, and the randomized &quot;mystery box&quot; trend gives
           customers terrible odds. We set out to build something better.
         </p>
         <p>
-          GiftPull is a gift card platform that combines a discount storefront, a fair gacha system
+          GCPACKS is a gift card platform that combines a discount storefront, a fair gacha system
           with positive expected value, and a peer-to-peer marketplace with escrow protection. Every
           feature is designed to put value back in the hands of our users.
         </p>
@@ -79,7 +79,7 @@ export default function AboutPage() {
       <section>
         <h2>The Team</h2>
         <p>
-          GiftPull is built by a small team of developers, designers, and gaming enthusiasts who
+          GCPACKS is built by a small team of developers, designers, and gaming enthusiasts who
           are passionate about creating fair digital marketplaces. We&apos;re always working on new
           features and improvements.
         </p>

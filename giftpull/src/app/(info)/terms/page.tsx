@@ -1,20 +1,20 @@
 import { InfoPageLayout } from "@/components/layout/InfoPageLayout";
 
 export const metadata = {
-  title: "Terms of Service — GiftPull",
+  title: "Terms of Service — GCPACKS",
 };
 
 export default function TermsPage() {
   return (
     <InfoPageLayout
       title="Terms of Service"
-      subtitle="Please read these terms carefully before using GiftPull."
+      subtitle="Please read these terms carefully before using GCPACKS."
       lastUpdated="March 25, 2026"
     >
       <section>
         <h2>1. Acceptance of Terms</h2>
         <p>
-          By accessing or using GiftPull (&quot;the Platform&quot;), you agree to be bound by these
+          By accessing or using GCPACKS (&quot;the Platform&quot;), you agree to be bound by these
           Terms of Service. If you do not agree to all of these terms, do not use the Platform.
         </p>
       </section>
@@ -23,7 +23,7 @@ export default function TermsPage() {
         <h2>2. Eligibility</h2>
         <p>
           You must be at least 18 years old (or the age of majority in your jurisdiction) to use
-          GiftPull. By creating an account, you represent and warrant that you meet this requirement.
+          GCPACKS. By creating an account, you represent and warrant that you meet this requirement.
         </p>
       </section>
 
@@ -44,7 +44,7 @@ export default function TermsPage() {
       <section>
         <h2>4. Storefront Purchases</h2>
         <p>
-          Gift cards purchased from the GiftPull Storefront are digital codes delivered
+          Gift cards purchased from the GCPACKS Storefront are digital codes delivered
           electronically. All codes are sourced from authorized distributors and are guaranteed to be
           valid at the time of delivery.
         </p>
@@ -73,14 +73,14 @@ export default function TermsPage() {
       <section>
         <h2>6. Peer-to-Peer Marketplace</h2>
         <p>
-          The Marketplace allows users to list and sell gift cards to other users. GiftPull acts as
+          The Marketplace allows users to list and sell gift cards to other users. GCPACKS acts as
           an intermediary and escrow provider but is not a party to the transaction between buyer and
           seller.
         </p>
         <ul>
           <li>Sellers must list only valid, unredeemed gift cards</li>
           <li>Funds are held in escrow until the buyer confirms the card</li>
-          <li>GiftPull charges a platform fee on completed transactions</li>
+          <li>GCPACKS charges a platform fee on completed transactions</li>
           <li>Fraudulent listings will result in account termination</li>
         </ul>
       </section>
@@ -89,7 +89,7 @@ export default function TermsPage() {
         <h2>7. Payments</h2>
         <p>
           All payments are processed through Stripe. By making a purchase, you agree to
-          Stripe&apos;s terms of service. GiftPull does not store your full payment card information.
+          Stripe&apos;s terms of service. GCPACKS does not store your full payment card information.
         </p>
         <p>
           Wallet balances and USDC balances are non-transferable outside the Platform except through
@@ -113,8 +113,8 @@ export default function TermsPage() {
       <section>
         <h2>9. Intellectual Property</h2>
         <p>
-          All content on GiftPull, including logos, designs, text, and software, is the property of
-          GiftPull or its licensors. You may not reproduce, distribute, or create derivative works
+          All content on GCPACKS, including logos, designs, text, and software, is the property of
+          GCPACKS or its licensors. You may not reproduce, distribute, or create derivative works
           without our prior written consent.
         </p>
       </section>
@@ -122,7 +122,7 @@ export default function TermsPage() {
       <section>
         <h2>10. Disclaimers</h2>
         <p>
-          GiftPull is provided &quot;as is&quot; and &quot;as available.&quot; We make no warranties,
+          GCPACKS is provided &quot;as is&quot; and &quot;as available.&quot; We make no warranties,
           express or implied, regarding the Platform&apos;s availability, accuracy, or fitness for a
           particular purpose.
         </p>
@@ -131,7 +131,7 @@ export default function TermsPage() {
       <section>
         <h2>11. Limitation of Liability</h2>
         <p>
-          To the maximum extent permitted by law, GiftPull shall not be liable for any indirect,
+          To the maximum extent permitted by law, GCPACKS shall not be liable for any indirect,
           incidental, special, consequential, or punitive damages arising from your use of the
           Platform, including but not limited to loss of profits, data, or goodwill.
         </p>

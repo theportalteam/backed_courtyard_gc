@@ -1,7 +1,7 @@
 import { InfoPageLayout } from "@/components/layout/InfoPageLayout";
 
 export const metadata = {
-  title: "Refund Policy — GiftPull",
+  title: "Refund Policy — GCPACKS",
 };
 
 export default function RefundPolicyPage() {
@@ -14,7 +14,7 @@ export default function RefundPolicyPage() {
       <section>
         <h2>Storefront Purchases</h2>
         <p>
-          Gift cards purchased from the GiftPull Storefront are backed by our full validity
+          Gift cards purchased from the GCPACKS Storefront are backed by our full validity
           guarantee. If a code is invalid, already redeemed, or does not match the listed
           denomination, you are entitled to a <strong>full refund</strong>.
         </p>

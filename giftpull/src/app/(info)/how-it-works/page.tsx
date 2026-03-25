@@ -2,7 +2,7 @@ import { InfoPageLayout } from "@/components/layout/InfoPageLayout";
 import { ShoppingBag, Sparkles, Users, CreditCard, Gift, ArrowRight, Shield, RefreshCw } from "lucide-react";
 
 export const metadata = {
-  title: "How It Works — GiftPull",
+  title: "How It Works — GCPACKS",
 };
 
 function Step({ number, icon: Icon, title, description }: {
@@ -54,7 +54,7 @@ function WorkstreamCard({ icon: Icon, title, subtitle, children }: {
 export default function HowItWorksPage() {
   return (
     <InfoPageLayout
-      title="How GiftPull Works"
+      title="How GCPACKS Works"
       subtitle="Three ways to buy, win, and trade gift cards."
     >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

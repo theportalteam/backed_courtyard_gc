@@ -1,7 +1,7 @@
 import { InfoPageLayout } from "@/components/layout/InfoPageLayout";
 
 export const metadata = {
-  title: "Privacy Policy — GiftPull",
+  title: "Privacy Policy — GCPACKS",
 };
 
 export default function PrivacyPage() {
@@ -108,7 +108,7 @@ export default function PrivacyPage() {
       <section>
         <h2>8. Children&apos;s Privacy</h2>
         <p>
-          GiftPull is not intended for users under the age of 18. We do not knowingly collect
+          GCPACKS is not intended for users under the age of 18. We do not knowingly collect
           personal information from children. If we learn that we have collected data from a minor,
           we will promptly delete it.
         </p>

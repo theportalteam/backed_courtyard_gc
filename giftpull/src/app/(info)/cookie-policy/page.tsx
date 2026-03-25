@@ -1,7 +1,7 @@
 import { InfoPageLayout } from "@/components/layout/InfoPageLayout";
 
 export const metadata = {
-  title: "Cookie Policy — GiftPull",
+  title: "Cookie Policy — GCPACKS",
 };
 
 export default function CookiePolicyPage() {

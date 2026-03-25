@@ -1,0 +1,6 @@
+name = "giftpull-landing"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+[site]
+bucket = "./public"

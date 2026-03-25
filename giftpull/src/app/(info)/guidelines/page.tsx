@@ -1,22 +1,22 @@
 import { InfoPageLayout } from "@/components/layout/InfoPageLayout";
 
 export const metadata = {
-  title: "Marketplace Guidelines — GiftPull",
+  title: "Marketplace Guidelines — GCPACKS",
 };
 
 export default function GuidelinesPage() {
   return (
     <InfoPageLayout
       title="Marketplace Guidelines"
-      subtitle="Rules and expectations for buying and selling on the GiftPull Marketplace."
+      subtitle="Rules and expectations for buying and selling on the GCPACKS Marketplace."
       lastUpdated="March 25, 2026"
     >
       <section>
         <h2>Allowed Items</h2>
-        <p>The following may be listed on the GiftPull Marketplace:</p>
+        <p>The following may be listed on the GCPACKS Marketplace:</p>
         <ul>
           <li>Valid, unredeemed digital gift cards from supported brands</li>
-          <li>Gift cards obtained through the GiftPull Storefront or Gacha Packs</li>
+          <li>Gift cards obtained through the GCPACKS Storefront or Gacha Packs</li>
           <li>Gift cards purchased from authorized retailers</li>
         </ul>
       </section>
@@ -51,7 +51,7 @@ export default function GuidelinesPage() {
           <li>Prices must be listed in USD</li>
           <li>Listings may be priced above or below face value at the seller&apos;s discretion</li>
           <li>Predatory pricing or price manipulation (e.g., artificial scarcity, coordinated pricing) is prohibited</li>
-          <li>GiftPull reserves the right to remove listings with unreasonable pricing</li>
+          <li>GCPACKS reserves the right to remove listings with unreasonable pricing</li>
         </ul>
       </section>
 
@@ -69,13 +69,13 @@ export default function GuidelinesPage() {
       <section>
         <h2>Disputes</h2>
         <p>
-          If a buyer reports an invalid or mismatched code, GiftPull will investigate. During a
+          If a buyer reports an invalid or mismatched code, GCPACKS will investigate. During a
           dispute:
         </p>
         <ul>
           <li>Funds remain in escrow until resolution</li>
           <li>Both parties may be asked to provide evidence</li>
-          <li>GiftPull&apos;s decision on disputes is final</li>
+          <li>GCPACKS&apos;s decision on disputes is final</li>
           <li>Most disputes are resolved within 48 hours</li>
         </ul>
       </section>
@@ -84,7 +84,7 @@ export default function GuidelinesPage() {
         <h2>Consequences for Violations</h2>
         <p>
           Violations of these guidelines may result in one or more of the following actions, at
-          GiftPull&apos;s sole discretion:
+          GCPACKS&apos;s sole discretion:
         </p>
         <ul>
           <li><strong>Warning:</strong> First offense for minor violations</li>

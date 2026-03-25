@@ -71,7 +71,7 @@ export function Navbar() {
           {/* Left: Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <span className="text-xl font-extrabold bg-gradient-to-r from-primary via-epic to-warning bg-clip-text text-transparent">
-              GiftPull
+              GCPACKS
             </span>
           </Link>
 
