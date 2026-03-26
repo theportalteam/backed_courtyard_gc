@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import { getServerAuthSession } from "@/lib/auth";
 import { createCheckoutSession } from "@/lib/stripe";
 import { earnPoints, redeemPoints, calculatePointsEarned } from "@/lib/points";
+import { logActivity } from "@/lib/activity";
+import { capturePortfolioSnapshot } from "@/lib/portfolio";
 
 export async function POST(request: NextRequest) {
   try {
@@ -153,6 +155,9 @@ export async function POST(request: NextRequest) {
         data: { pointsEarned },
       });
 
+      await logActivity(userId, "BUNDLE_PURCHASE", `Purchased ${bundle.name} (${cardIds.length} cards)`, { amount: bundle.price, currency: "USD", metadata: { bundleId: bundle.id, cardCount: cardIds.length } });
+      await capturePortfolioSnapshot(userId);
+
       return NextResponse.json({
         transaction: result.transaction,
         cards: result.cards,
@@ -206,6 +211,9 @@ export async function POST(request: NextRequest) {
         amount: pointsCost,
         description: `Redeemed for bundle: ${bundle.name}`,
       });
+
+      await logActivity(userId, "BUNDLE_PURCHASE", `Purchased ${bundle.name} (${cardIds.length} cards) with points`, { amount: bundle.faceValue, currency: "POINTS", metadata: { bundleId: bundle.id, cardCount: cardIds.length, pointsCost } });
+      await capturePortfolioSnapshot(userId);
 
       return NextResponse.json({
         transaction: result.transaction,

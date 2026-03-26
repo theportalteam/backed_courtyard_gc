@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerAuthSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { logActivity } from "@/lib/activity";
 
 /**
  * POST /api/wallet/withdraw
@@ -78,6 +79,9 @@ export async function POST(request: NextRequest) {
         },
       }),
     ]);
+
+    const truncatedAddr = `${toAddress.slice(0, 6)}...${toAddress.slice(-4)}`;
+    await logActivity(userId, "USDC_WITHDRAWAL", `Withdrew $${amount.toFixed(2)} USDC to ${truncatedAddr}`, { amount, currency: "USDC", txHash: transaction.baseTxHash ?? undefined, metadata: { toAddress: toAddress.trim() } });
 
     return NextResponse.json({
       success: true,

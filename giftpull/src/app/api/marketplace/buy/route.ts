@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import { getServerAuthSession } from "@/lib/auth";
 import { createCheckoutSession } from "@/lib/stripe";
 import { earnPoints, redeemPoints } from "@/lib/points";
+import { logActivity } from "@/lib/activity";
+import { capturePortfolioSnapshot } from "@/lib/portfolio";
 import type { SellerTier, PaymentMethod } from "@prisma/client";
 
 const VALID_PAYMENT_METHODS: PaymentMethod[] = ["STRIPE", "USDC_BASE", "POINTS"];
@@ -220,6 +222,11 @@ export async function POST(request: NextRequest) {
         });
       }
 
+      await logActivity(buyerId, "MARKETPLACE_PURCHASE", `Bought $${listing.giftCard.denomination} ${listing.giftCard.brand} Gift Card from @${listing.seller.name} for $${listing.askingPrice.toFixed(2)}`, { amount: listing.askingPrice, currency: "USD", metadata: { listingId, sellerId: listing.sellerId } });
+      await logActivity(listing.sellerId, "MARKETPLACE_SALE", `Sold $${listing.giftCard.denomination} ${listing.giftCard.brand} Gift Card for $${listing.askingPrice.toFixed(2)}`, { amount: listing.askingPrice, currency: "USD", metadata: { listingId, buyerId, commission } });
+      await capturePortfolioSnapshot(buyerId);
+      await capturePortfolioSnapshot(listing.sellerId);
+
       return NextResponse.json({
         transaction: result.transaction,
         card: result.card,
@@ -310,6 +317,11 @@ export async function POST(request: NextRequest) {
         amount: pointsCost,
         description: `P2P purchase: ${listing.giftCard.brand} $${listing.giftCard.denomination}`,
       });
+
+      await logActivity(buyerId, "MARKETPLACE_PURCHASE", `Bought $${listing.giftCard.denomination} ${listing.giftCard.brand} Gift Card with points`, { amount: listing.askingPrice, currency: "POINTS", metadata: { listingId, sellerId: listing.sellerId, pointsCost } });
+      await logActivity(listing.sellerId, "MARKETPLACE_SALE", `Sold $${listing.giftCard.denomination} ${listing.giftCard.brand} Gift Card for $${listing.askingPrice.toFixed(2)}`, { amount: listing.askingPrice, currency: "USD", metadata: { listingId, buyerId, commission } });
+      await capturePortfolioSnapshot(buyerId);
+      await capturePortfolioSnapshot(listing.sellerId);
 
       return NextResponse.json({
         transaction: result.transaction,

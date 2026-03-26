@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
@@ -9,7 +9,6 @@ import {
   DollarSign,
   Menu,
   X,
-  ChevronDown,
   User,
   LogOut,
   Shield,
@@ -18,6 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 import { formatPoints, formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
+import { ProfileDropdown } from "@/components/profile/ProfileDropdown";
 
 interface NavLink {
   href: string;
@@ -35,26 +35,10 @@ export function Navbar() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const user = session?.user as
     | { name?: string | null; email?: string; isAdmin?: boolean; pointsBalance?: number; usdcBalance?: number }
     | undefined;
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -120,65 +104,8 @@ export function Navbar() {
                   </span>
                 </div>
 
-                {/* Avatar dropdown */}
-                <div className="relative" ref={dropdownRef}>
-                  <button
-                    onClick={() => setDropdownOpen((prev) => !prev)}
-                    className={cn(
-                      "flex items-center gap-2 px-3 py-1.5 transition-colors",
-                      "hover:bg-bg-elevated",
-                      dropdownOpen && "bg-bg-elevated"
-                    )}
-                  >
-                    <div className="w-7 h-7 bg-primary/20 border border-primary/40 flex items-center justify-center">
-                      <User className="w-4 h-4 text-primary" />
-                    </div>
-                    <span className="text-sm font-medium text-text-primary max-w-[100px] truncate">
-                      {user.name || "User"}
-                    </span>
-                    <ChevronDown
-                      className={cn(
-                        "w-4 h-4 text-text-secondary transition-transform",
-                        dropdownOpen && "rotate-180"
-                      )}
-                    />
-                  </button>
-
-                  {/* Dropdown menu */}
-                  {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-bg-surface border border-outline-variant/30 shadow-xl shadow-black/30 py-1 z-50">
-                      <Link
-                        href="/profile"
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-headline uppercase tracking-tight text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors"
-                        onClick={() => setDropdownOpen(false)}
-                      >
-                        <User className="w-4 h-4" />
-                        Profile
-                      </Link>
-                      {user.isAdmin && (
-                        <Link
-                          href="/admin"
-                          className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-headline uppercase tracking-tight text-text-secondary hover:text-text-primary hover:bg-bg-elevated transition-colors"
-                          onClick={() => setDropdownOpen(false)}
-                        >
-                          <Shield className="w-4 h-4" />
-                          Admin
-                        </Link>
-                      )}
-                      <div className="my-1 border-t border-outline-variant/30" />
-                      <button
-                        onClick={() => {
-                          setDropdownOpen(false);
-                          signOut();
-                        }}
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-headline uppercase tracking-tight text-red-400 hover:text-red-300 hover:bg-bg-elevated transition-colors w-full"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Log out
-                      </button>
-                    </div>
-                  )}
-                </div>
+                {/* Profile dropdown */}
+                <ProfileDropdown />
               </>
             )}
 

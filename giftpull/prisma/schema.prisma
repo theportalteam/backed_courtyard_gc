@@ -119,6 +119,32 @@ enum VerificationStatus {
   FAILED
 }
 
+enum OfferStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  EXPIRED
+  CANCELLED
+}
+
+enum ActivityType {
+  STOREFRONT_PURCHASE
+  BUNDLE_PURCHASE
+  GACHA_PULL
+  GACHA_BUYBACK
+  MARKETPLACE_PURCHASE
+  MARKETPLACE_SALE
+  MARKETPLACE_LIST
+  OFFER_MADE
+  OFFER_RECEIVED
+  OFFER_ACCEPTED
+  OFFER_DECLINED
+  POINTS_EARNED
+  POINTS_REDEEMED
+  USDC_WITHDRAWAL
+  CARD_REDEEMED
+}
+
 // ─── MODELS ───────────────────────────────────────────────
 
 model User {
@@ -153,6 +179,11 @@ model User {
   leaderboardEntries  LeaderboardEntry[]
   accounts            Account[]
   sessions            Session[]
+  offersMade          Offer[]             @relation("OffersMade")
+  offersReceived      Offer[]             @relation("OffersReceived")
+  favorites           Favorite[]
+  activityLog         ActivityLog[]
+  portfolioSnapshots  PortfolioSnapshot[]
 }
 
 model Account {
@@ -209,6 +240,7 @@ model GiftCard {
   transactions       Transaction[]
   listings           P2PListing[]
   gachaPulls         GachaPull[]
+  favorites          Favorite[]
 }
 
 model GachaPack {
@@ -311,6 +343,8 @@ model P2PListing {
   disputeReason  String?
   createdAt      DateTime      @default(now())
   expiresAt      DateTime
+  offers         Offer[]
+  favorites      Favorite[]
 }
 
 model Bundle {
@@ -364,4 +398,59 @@ model LeaderboardPrize {
   prizeLabel String
   isActive   Boolean           @default(true)
   createdAt  DateTime          @default(now())
+}
+
+// ─── PROFILE ─────────────────────────────────────────────
+
+model Offer {
+  id         String      @id @default(cuid())
+  listingId  String
+  listing    P2PListing  @relation(fields: [listingId], references: [id])
+  fromUserId String
+  fromUser   User        @relation("OffersMade", fields: [fromUserId], references: [id])
+  toUserId   String
+  toUser     User        @relation("OffersReceived", fields: [toUserId], references: [id])
+  amount     Float
+  status     OfferStatus @default(PENDING)
+  message    String?
+  createdAt  DateTime    @default(now())
+  expiresAt  DateTime
+}
+
+model Favorite {
+  id         String      @id @default(cuid())
+  userId     String
+  user       User        @relation(fields: [userId], references: [id])
+  giftCardId String?
+  giftCard   GiftCard?   @relation(fields: [giftCardId], references: [id])
+  listingId  String?
+  listing    P2PListing? @relation(fields: [listingId], references: [id])
+  createdAt  DateTime    @default(now())
+
+  @@unique([userId, giftCardId])
+  @@unique([userId, listingId])
+}
+
+model ActivityLog {
+  id          String       @id @default(cuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id])
+  type        ActivityType
+  description String
+  amount      Float?
+  currency    String?
+  txHash      String?
+  metadata    Json?
+  createdAt   DateTime     @default(now())
+}
+
+model PortfolioSnapshot {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  totalValue Float
+  date       DateTime
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, date])
 }

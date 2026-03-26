@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import { getServerAuthSession } from "@/lib/auth";
 import { createCheckoutSession } from "@/lib/stripe";
 import { earnPoints, redeemPoints, calculatePointsEarned } from "@/lib/points";
+import { logActivity } from "@/lib/activity";
+import { capturePortfolioSnapshot } from "@/lib/portfolio";
 
 export async function POST(request: NextRequest) {
   try {
@@ -119,6 +121,9 @@ export async function POST(request: NextRequest) {
         data: { pointsEarned },
       });
 
+      await logActivity(userId, "STOREFRONT_PURCHASE", `Purchased $${card.denomination} ${card.brand} Gift Card`, { amount: price, currency: "USD", metadata: { cardBrand: card.brand, cardId } });
+      await capturePortfolioSnapshot(userId);
+
       return NextResponse.json({
         transaction: result.transaction,
         card: result.card,
@@ -163,6 +168,10 @@ export async function POST(request: NextRequest) {
         amount: pointsCost,
         description: `Redeemed for ${card.brand} $${card.denomination} gift card`,
       });
+
+      await logActivity(userId, "STOREFRONT_PURCHASE", `Purchased $${card.denomination} ${card.brand} Gift Card with points`, { amount: card.denomination, currency: "POINTS", metadata: { cardBrand: card.brand, cardId, pointsCost } });
+      await logActivity(userId, "POINTS_REDEEMED", `Redeemed ${pointsCost} points for ${card.brand} $${card.denomination} Gift Card`, { amount: pointsCost, currency: "POINTS" });
+      await capturePortfolioSnapshot(userId);
 
       return NextResponse.json({
         transaction: result.transaction,

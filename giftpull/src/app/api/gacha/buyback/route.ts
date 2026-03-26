@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerAuthSession } from "@/lib/auth";
 import { executeBuyback } from "@/lib/buyback";
+import { logActivity } from "@/lib/activity";
+import { capturePortfolioSnapshot } from "@/lib/portfolio";
 
 /**
  * POST /api/gacha/buyback
@@ -30,6 +32,9 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await executeBuyback(userId, giftCardId);
+
+    await logActivity(userId, "GACHA_BUYBACK", `Sold back gift card for $${result.buybackAmount.toFixed(2)} USDC`, { amount: result.buybackAmount, currency: "USDC", metadata: { cardId: giftCardId, buybackRate: 0.95 } });
+    await capturePortfolioSnapshot(userId);
 
     return NextResponse.json({
       buybackAmount: result.buybackAmount,

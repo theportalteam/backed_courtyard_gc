@@ -1,4 +1,4 @@
-import { PrismaClient, GiftCardBrand, GiftCardStatus, GiftCardSource, PackTier, RarityTier, TransactionType, PaymentMethod, TransactionStatus, PointsType, SellerTier, ListingStatus, LeaderboardPeriod } from '@prisma/client';
+import { PrismaClient, GiftCardBrand, GiftCardStatus, GiftCardSource, PackTier, RarityTier, TransactionType, PaymentMethod, TransactionStatus, PointsType, SellerTier, ListingStatus, LeaderboardPeriod, OfferStatus, ActivityType } from '@prisma/client';
 import { hashSync } from 'bcryptjs';
 
 const prisma = new PrismaClient();
@@ -58,6 +58,10 @@ async function main() {
   console.log('Clearing existing data...');
 
   // Delete in FK-safe order (children first)
+  await prisma.portfolioSnapshot.deleteMany();
+  await prisma.activityLog.deleteMany();
+  await prisma.favorite.deleteMany();
+  await prisma.offer.deleteMany();
   await prisma.leaderboardEntry.deleteMany();
   await prisma.leaderboardPrize.deleteMany();
   await prisma.userPackUnlock.deleteMany();
@@ -99,14 +103,15 @@ async function main() {
     data: {
       email: 'alice@test.com',
       name: 'Alice',
-      pointsBalance: 2500,
-      usdcBalance: 50,
+      pointsBalance: 2719,
+      usdcBalance: 14.62,
       sellerTier: SellerTier.VERIFIED,
       sellerRating: 4.8,
       totalSales: 15,
       passwordHash,
       lastLoginAt: new Date(),
-      loginStreak: 7,
+      loginStreak: 5,
+      walletAddress: '0x0B98a7C1d2e3F4a5B6c7D8e9F0a1B2c3D4C18',
     },
   });
   console.log(`Created user: ${alice.email}`);
@@ -833,6 +838,359 @@ async function main() {
   await prisma.$transaction([...weeklyEntries, ...monthlyEntries]);
   console.log(`Created ${weeklyEntries.length + monthlyEntries.length} leaderboard entries.`);
 
+  // ─── Profile: Alice's Collection (8 RESERVED) ─────────
+
+  console.log('Creating Alice profile collection...');
+
+  const aliceCollectionData: { brand: GiftCardBrand; denomination: number }[] = [
+    { brand: GiftCardBrand.STEAM, denomination: 25 },
+    { brand: GiftCardBrand.STEAM, denomination: 25 },
+    { brand: GiftCardBrand.XBOX, denomination: 50 },
+    { brand: GiftCardBrand.NINTENDO, denomination: 10 },
+    { brand: GiftCardBrand.PLAYSTATION, denomination: 100 },
+    { brand: GiftCardBrand.GOOGLE_PLAY, denomination: 15 },
+    { brand: GiftCardBrand.SPOTIFY, denomination: 25 },
+    { brand: GiftCardBrand.AMAZON, denomination: 50 },
+  ];
+
+  const aliceCollection = await prisma.$transaction(
+    aliceCollectionData.map((c, i) =>
+      prisma.giftCard.create({
+        data: {
+          brand: c.brand,
+          denomination: c.denomination,
+          code: randomCode(),
+          status: GiftCardStatus.RESERVED,
+          source: GiftCardSource.BULK_IMPORT,
+          fmv: c.denomination,
+          rarityTier: rarityForDenomination(c.denomination),
+          currentOwnerId: alice.id,
+          createdAt: daysAgo(25 - i * 3),
+        },
+      })
+    )
+  );
+  console.log(`Created ${aliceCollection.length} collection cards for Alice.`);
+
+  // ─── Profile: Alice's Listed Cards (3 LISTED) ─────────
+
+  const aliceListedData: { brand: GiftCardBrand; denomination: number; asking: number }[] = [
+    { brand: GiftCardBrand.ROBLOX, denomination: 25, asking: 21 },
+    { brand: GiftCardBrand.NETFLIX, denomination: 50, asking: 44 },
+    { brand: GiftCardBrand.APPLE, denomination: 15, asking: 13 },
+  ];
+
+  const aliceListedCards = await prisma.$transaction(
+    aliceListedData.map((c) =>
+      prisma.giftCard.create({
+        data: {
+          brand: c.brand,
+          denomination: c.denomination,
+          code: randomCode(),
+          status: GiftCardStatus.LISTED,
+          source: GiftCardSource.BULK_IMPORT,
+          fmv: c.denomination,
+          rarityTier: rarityForDenomination(c.denomination),
+          currentOwnerId: alice.id,
+        },
+      })
+    )
+  );
+
+  const aliceProfileListings = await prisma.$transaction(
+    aliceListedData.map((c, i) =>
+      prisma.p2PListing.create({
+        data: {
+          sellerId: alice.id,
+          giftCardId: aliceListedCards[i].id,
+          askingPrice: c.asking,
+          suggestedPrice: Math.round(c.denomination * 0.9 * 100) / 100,
+          status: ListingStatus.ACTIVE,
+          expiresAt: daysFromNow(7),
+          createdAt: daysAgo(2),
+        },
+      })
+    )
+  );
+  console.log(`Created ${aliceProfileListings.length} listed cards for Alice.`);
+
+  // ─── Profile: Offers received on Alice's listings ──────
+
+  const offerUsers = [bob, ...fakeUsers.slice(0, 4)];
+  const offersReceivedData = [
+    { listingIdx: 0, fromUser: offerUsers[0], amount: 18, status: OfferStatus.PENDING, message: 'Would you take $18?' },
+    { listingIdx: 0, fromUser: offerUsers[1], amount: 19.50, status: OfferStatus.PENDING, message: null },
+    { listingIdx: 1, fromUser: offerUsers[2], amount: 40, status: OfferStatus.DECLINED, message: 'I can do $40' },
+    { listingIdx: 1, fromUser: offerUsers[3], amount: 42, status: OfferStatus.PENDING, message: null },
+    { listingIdx: 2, fromUser: offerUsers[4], amount: 11, status: OfferStatus.DECLINED, message: 'Best I can do' },
+  ];
+
+  await prisma.$transaction(
+    offersReceivedData.map((o, i) =>
+      prisma.offer.create({
+        data: {
+          listingId: aliceProfileListings[o.listingIdx].id,
+          fromUserId: o.fromUser.id,
+          toUserId: alice.id,
+          amount: o.amount,
+          status: o.status,
+          message: o.message,
+          expiresAt: daysFromNow(2),
+          createdAt: daysAgo(1 + i * 0.5),
+        },
+      })
+    )
+  );
+  console.log(`Created ${offersReceivedData.length} offers received for Alice.`);
+
+  // ─── Profile: Offers Alice made on other listings ──────
+
+  // Create 2 listings by bob for Alice to offer on
+  const bobListedCards = await prisma.$transaction([
+    prisma.giftCard.create({
+      data: {
+        brand: GiftCardBrand.STEAM,
+        denomination: 50,
+        code: randomCode(),
+        status: GiftCardStatus.LISTED,
+        source: GiftCardSource.BULK_IMPORT,
+        fmv: 50,
+        rarityTier: RarityTier.EPIC,
+        currentOwnerId: bob.id,
+      },
+    }),
+    prisma.giftCard.create({
+      data: {
+        brand: GiftCardBrand.XBOX,
+        denomination: 25,
+        code: randomCode(),
+        status: GiftCardStatus.LISTED,
+        source: GiftCardSource.BULK_IMPORT,
+        fmv: 25,
+        rarityTier: RarityTier.RARE,
+        currentOwnerId: bob.id,
+      },
+    }),
+  ]);
+
+  const bobListings = await prisma.$transaction([
+    prisma.p2PListing.create({
+      data: {
+        sellerId: bob.id,
+        giftCardId: bobListedCards[0].id,
+        askingPrice: 44,
+        suggestedPrice: 45,
+        status: ListingStatus.ACTIVE,
+        expiresAt: daysFromNow(7),
+        createdAt: daysAgo(3),
+      },
+    }),
+    prisma.p2PListing.create({
+      data: {
+        sellerId: bob.id,
+        giftCardId: bobListedCards[1].id,
+        askingPrice: 22,
+        suggestedPrice: 22.50,
+        status: ListingStatus.ACTIVE,
+        expiresAt: daysFromNow(7),
+        createdAt: daysAgo(3),
+      },
+    }),
+  ]);
+
+  await prisma.$transaction([
+    prisma.offer.create({
+      data: {
+        listingId: bobListings[0].id,
+        fromUserId: alice.id,
+        toUserId: bob.id,
+        amount: 40,
+        status: OfferStatus.PENDING,
+        message: 'Would you accept $40?',
+        expiresAt: daysFromNow(2),
+        createdAt: daysAgo(1),
+      },
+    }),
+    prisma.offer.create({
+      data: {
+        listingId: bobListings[1].id,
+        fromUserId: alice.id,
+        toUserId: bob.id,
+        amount: 20,
+        status: OfferStatus.ACCEPTED,
+        expiresAt: daysFromNow(2),
+        createdAt: daysAgo(4),
+      },
+    }),
+  ]);
+  console.log('Created 2 offers made by Alice.');
+
+  // ─── Profile: Favorites ────────────────────────────────
+
+  await prisma.$transaction([
+    prisma.favorite.create({ data: { userId: alice.id, giftCardId: aliceCollection[0].id } }),
+    prisma.favorite.create({ data: { userId: alice.id, giftCardId: aliceCollection[4].id } }),
+    prisma.favorite.create({ data: { userId: alice.id, listingId: bobListings[0].id } }),
+    prisma.favorite.create({ data: { userId: alice.id, listingId: aliceProfileListings[1].id } }),
+  ]);
+  console.log('Created 4 favorites for Alice.');
+
+  // ─── Profile: Activity Log (30+ entries) ───────────────
+
+  console.log('Creating activity log...');
+
+  const activityEntries: {
+    type: ActivityType;
+    description: string;
+    amount?: number;
+    currency?: string;
+    txHash?: string;
+    metadata?: Record<string, unknown>;
+    createdAt: Date;
+  }[] = [
+    // Storefront purchases
+    { type: ActivityType.STOREFRONT_PURCHASE, description: 'Purchased $25 Steam Gift Card', amount: 25, currency: 'USD', metadata: { cardBrand: 'STEAM' }, createdAt: daysAgo(28) },
+    { type: ActivityType.STOREFRONT_PURCHASE, description: 'Purchased $50 Xbox Gift Card', amount: 50, currency: 'USD', metadata: { cardBrand: 'XBOX' }, createdAt: daysAgo(26) },
+    { type: ActivityType.STOREFRONT_PURCHASE, description: 'Purchased $100 PlayStation Gift Card', amount: 100, currency: 'USD', metadata: { cardBrand: 'PLAYSTATION' }, createdAt: daysAgo(24) },
+    { type: ActivityType.STOREFRONT_PURCHASE, description: 'Purchased $25 Spotify Gift Card', amount: 25, currency: 'USD', metadata: { cardBrand: 'SPOTIFY' }, createdAt: daysAgo(22) },
+    { type: ActivityType.STOREFRONT_PURCHASE, description: 'Purchased $50 Amazon Gift Card', amount: 50, currency: 'USD', metadata: { cardBrand: 'AMAZON' }, createdAt: daysAgo(20) },
+    // Bundle purchase
+    { type: ActivityType.BUNDLE_PURCHASE, description: 'Purchased Gaming Starter Pack (3 cards)', amount: 50, currency: 'USD', metadata: { bundleName: 'Gaming Starter Pack', cardCount: 3 }, createdAt: daysAgo(19) },
+    // Gacha pulls
+    { type: ActivityType.GACHA_PULL, description: 'Pulled Common Pack — $5 Roblox Gift Card (Common)', amount: 10, currency: 'USD', metadata: { packTier: 'COMMON', rarity: 'COMMON', cardValue: 5 }, createdAt: daysAgo(18) },
+    { type: ActivityType.GACHA_PULL, description: 'Pulled Common Pack — $10 Nintendo Gift Card (Uncommon)', amount: 10, currency: 'USD', metadata: { packTier: 'COMMON', rarity: 'UNCOMMON', cardValue: 10 }, createdAt: daysAgo(17) },
+    { type: ActivityType.GACHA_PULL, description: 'Pulled Rare Pack — $25 Steam Gift Card (Rare)', amount: 25, currency: 'USD', metadata: { packTier: 'RARE', rarity: 'RARE', cardValue: 25 }, createdAt: daysAgo(15) },
+    { type: ActivityType.GACHA_PULL, description: 'Pulled Epic Pack — $100 PlayStation Gift Card (Epic)', amount: 75, currency: 'USD', metadata: { packTier: 'EPIC', rarity: 'EPIC', cardValue: 100 }, createdAt: daysAgo(12) },
+    { type: ActivityType.GACHA_PULL, description: 'Pulled Rare Pack — $15 Google Play Gift Card (Common)', amount: 25, currency: 'USD', metadata: { packTier: 'RARE', rarity: 'COMMON', cardValue: 15 }, createdAt: daysAgo(10) },
+    { type: ActivityType.GACHA_PULL, description: 'Pulled Epic Pack — $50 Xbox Gift Card (Epic)', amount: 75, currency: 'USD', metadata: { packTier: 'EPIC', rarity: 'EPIC', cardValue: 50 }, createdAt: daysAgo(8) },
+    // Buybacks
+    { type: ActivityType.GACHA_BUYBACK, description: 'Sold back $5 Roblox Gift Card for $4.75 USDC', amount: 4.75, currency: 'USDC', metadata: { buybackRate: 0.95 }, createdAt: daysAgo(18) },
+    { type: ActivityType.GACHA_BUYBACK, description: 'Sold back $10 Nintendo Gift Card for $9.50 USDC', amount: 9.50, currency: 'USDC', metadata: { buybackRate: 0.95 }, createdAt: daysAgo(16) },
+    // Marketplace activity
+    { type: ActivityType.MARKETPLACE_LIST, description: 'Listed $25 Roblox Gift Card for $21.00', amount: 21, metadata: { cardBrand: 'ROBLOX' }, createdAt: daysAgo(5) },
+    { type: ActivityType.MARKETPLACE_LIST, description: 'Listed $50 Netflix Gift Card for $44.00', amount: 44, metadata: { cardBrand: 'NETFLIX' }, createdAt: daysAgo(4) },
+    { type: ActivityType.MARKETPLACE_LIST, description: 'Listed $15 Apple Gift Card for $13.00', amount: 13, metadata: { cardBrand: 'APPLE' }, createdAt: daysAgo(3) },
+    { type: ActivityType.MARKETPLACE_SALE, description: 'Sold $25 Steam Gift Card to @CryptoKing for $22.00', amount: 22, currency: 'USD', metadata: { commission: 1.54 }, createdAt: daysAgo(7) },
+    { type: ActivityType.MARKETPLACE_PURCHASE, description: 'Bought $50 Steam Gift Card from @Bob for $44.00', amount: 44, currency: 'USD', createdAt: daysAgo(6) },
+    // Offers
+    { type: ActivityType.OFFER_MADE, description: 'Offered $40.00 on $50 Steam Gift Card', amount: 40, createdAt: daysAgo(1) },
+    { type: ActivityType.OFFER_RECEIVED, description: 'Received offer of $18.00 from @Bob on $25 Roblox Gift Card', amount: 18, createdAt: daysAgo(1) },
+    { type: ActivityType.OFFER_DECLINED, description: 'Declined offer of $11.00 on $15 Apple Gift Card', amount: 11, createdAt: daysAgo(2) },
+    // Points
+    { type: ActivityType.POINTS_EARNED, description: 'Earned 250 points from $25 Steam card purchase', amount: 250, currency: 'POINTS', metadata: { source: 'PURCHASE_EARN' }, createdAt: daysAgo(28) },
+    { type: ActivityType.POINTS_EARNED, description: 'Earned 500 points from $50 Xbox card purchase', amount: 500, currency: 'POINTS', metadata: { source: 'PURCHASE_EARN' }, createdAt: daysAgo(26) },
+    { type: ActivityType.POINTS_EARNED, description: 'Earned 30 points from Rare Pack pull', amount: 30, currency: 'POINTS', metadata: { source: 'GACHA_EARN' }, createdAt: daysAgo(15) },
+    { type: ActivityType.POINTS_EARNED, description: 'Daily login bonus', amount: 5, currency: 'POINTS', metadata: { source: 'DAILY_LOGIN', streak: 3 }, createdAt: daysAgo(3) },
+    { type: ActivityType.POINTS_EARNED, description: '5-day streak bonus', amount: 19, currency: 'POINTS', metadata: { source: 'STREAK_BONUS', streak: 5 }, createdAt: daysAgo(1) },
+    { type: ActivityType.POINTS_REDEEMED, description: 'Redeemed 800 points for Common Pack', amount: 800, currency: 'POINTS', metadata: { redemptionType: 'GACHA_PACK', packTier: 'COMMON' }, createdAt: daysAgo(14) },
+    // USDC withdrawal
+    { type: ActivityType.USDC_WITHDRAWAL, description: 'Withdrew $47.50 USDC to 0x3f8a...9c12', amount: 47.50, currency: 'USDC', txHash: '0x3f8a7b2c1d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9c12', createdAt: daysAgo(9) },
+    // Card redeemed
+    { type: ActivityType.CARD_REDEEMED, description: 'Redeemed $25 Steam Gift Card code', amount: 25, metadata: { cardBrand: 'STEAM' }, createdAt: daysAgo(13) },
+    // More points for padding
+    { type: ActivityType.POINTS_EARNED, description: 'Earned 1000 points from $100 PlayStation purchase', amount: 1000, currency: 'POINTS', metadata: { source: 'PURCHASE_EARN' }, createdAt: daysAgo(24) },
+    { type: ActivityType.POINTS_EARNED, description: 'Daily login bonus', amount: 5, currency: 'POINTS', metadata: { source: 'DAILY_LOGIN', streak: 1 }, createdAt: daysAgo(7) },
+    { type: ActivityType.POINTS_EARNED, description: 'Daily login bonus', amount: 5, currency: 'POINTS', metadata: { source: 'DAILY_LOGIN', streak: 2 }, createdAt: daysAgo(6) },
+    { type: ActivityType.POINTS_EARNED, description: 'Daily login bonus', amount: 5, currency: 'POINTS', metadata: { source: 'DAILY_LOGIN', streak: 4 }, createdAt: daysAgo(2) },
+  ];
+
+  await prisma.$transaction(
+    activityEntries.map((e) =>
+      prisma.activityLog.create({
+        data: {
+          userId: alice.id,
+          type: e.type,
+          description: e.description,
+          amount: e.amount,
+          currency: e.currency,
+          txHash: e.txHash,
+          metadata: e.metadata as any,
+          createdAt: e.createdAt,
+        },
+      })
+    )
+  );
+  console.log(`Created ${activityEntries.length} activity log entries for Alice.`);
+
+  // ─── Profile: Extended Points Ledger (20+ entries) ─────
+
+  console.log('Creating extended points ledger...');
+
+  const extendedLedger = [
+    { amount: 250, type: PointsType.PURCHASE_EARN, description: 'Earned from $25 Steam card purchase', createdAt: daysAgo(28) },
+    { amount: 500, type: PointsType.PURCHASE_EARN, description: 'Earned from $50 Xbox card purchase', createdAt: daysAgo(26) },
+    { amount: 1000, type: PointsType.PURCHASE_EARN, description: 'Earned from $100 PlayStation card purchase', createdAt: daysAgo(24) },
+    { amount: 250, type: PointsType.PURCHASE_EARN, description: 'Earned from $25 Spotify card purchase', createdAt: daysAgo(22) },
+    { amount: 500, type: PointsType.PURCHASE_EARN, description: 'Earned from $50 Amazon card purchase', createdAt: daysAgo(20) },
+    { amount: 100, type: PointsType.PURCHASE_EARN, description: 'Earned from $10 Nintendo bundle item', createdAt: daysAgo(19) },
+    { amount: 20, type: PointsType.GACHA_EARN, description: 'Bonus from Common Pack pull', createdAt: daysAgo(18) },
+    { amount: 20, type: PointsType.GACHA_EARN, description: 'Bonus from Common Pack pull', createdAt: daysAgo(17) },
+    { amount: 30, type: PointsType.GACHA_EARN, description: 'Bonus from Rare Pack pull (Rare)', createdAt: daysAgo(15) },
+    { amount: -800, type: PointsType.REDEMPTION, description: 'Redeemed for Common Pack', createdAt: daysAgo(14) },
+    { amount: 150, type: PointsType.GACHA_EARN, description: 'Bonus from Epic Pack pull (Epic) + streak', createdAt: daysAgo(12) },
+    { amount: 50, type: PointsType.GACHA_EARN, description: 'Bonus from Rare Pack pull', createdAt: daysAgo(10) },
+    { amount: 75, type: PointsType.GACHA_EARN, description: 'Bonus from Epic Pack pull', createdAt: daysAgo(8) },
+    { amount: 5, type: PointsType.DAILY_LOGIN, description: 'Daily login bonus', createdAt: daysAgo(7) },
+    { amount: 5, type: PointsType.DAILY_LOGIN, description: 'Daily login bonus', createdAt: daysAgo(6) },
+    { amount: 5, type: PointsType.DAILY_LOGIN, description: 'Daily login bonus', createdAt: daysAgo(5) },
+    { amount: 5, type: PointsType.DAILY_LOGIN, description: 'Daily login bonus', createdAt: daysAgo(4) },
+    { amount: 5, type: PointsType.DAILY_LOGIN, description: 'Daily login bonus', createdAt: daysAgo(3) },
+    { amount: 5, type: PointsType.DAILY_LOGIN, description: 'Daily login bonus', createdAt: daysAgo(2) },
+    { amount: 19, type: PointsType.STREAK_BONUS, description: '5-day streak bonus', createdAt: daysAgo(1) },
+    { amount: 5, type: PointsType.DAILY_LOGIN, description: 'Daily login bonus', createdAt: daysAgo(1) },
+    { amount: 220, type: PointsType.PURCHASE_EARN, description: 'Earned from marketplace purchase', createdAt: daysAgo(6) },
+  ];
+
+  await prisma.$transaction(
+    extendedLedger.map((e) =>
+      prisma.pointsLedger.create({
+        data: {
+          userId: alice.id,
+          amount: e.amount,
+          type: e.type,
+          multiplier: 1.0,
+          description: e.description,
+          createdAt: e.createdAt,
+        },
+      })
+    )
+  );
+  console.log(`Created ${extendedLedger.length} extended points ledger entries.`);
+
+  // ─── Profile: Portfolio Snapshots (30 days) ────────────
+
+  console.log('Creating portfolio snapshots...');
+
+  const aliceCollectionValue = aliceCollectionData.reduce((sum, c) => sum + c.denomination, 0); // $300
+  const snapshotEntries = [];
+  let snapshotValue = 350; // Start at ~$350
+
+  for (let day = 30; day >= 0; day--) {
+    // Random walk with drift toward current value
+    const target = day === 0 ? aliceCollectionValue : snapshotValue;
+    const drift = (aliceCollectionValue - snapshotValue) * 0.03;
+    const noise = (Math.random() - 0.5) * 40;
+    snapshotValue = Math.max(200, Math.min(400, snapshotValue + drift + noise));
+    if (day === 0) snapshotValue = aliceCollectionValue;
+
+    const snapshotDate = new Date();
+    snapshotDate.setDate(snapshotDate.getDate() - day);
+    snapshotDate.setHours(0, 0, 0, 0);
+
+    snapshotEntries.push({
+      userId: alice.id,
+      totalValue: parseFloat(snapshotValue.toFixed(2)),
+      date: snapshotDate,
+    });
+  }
+
+  await prisma.$transaction(
+    snapshotEntries.map((s) =>
+      prisma.portfolioSnapshot.create({ data: s })
+    )
+  );
+  console.log(`Created ${snapshotEntries.length} portfolio snapshots for Alice.`);
+
   // ─── Summary ────────────────────────────────────────────
 
   const totalCards = await prisma.giftCard.count();
@@ -843,6 +1201,10 @@ async function main() {
   const totalUsers = await prisma.user.count();
   const totalLbEntries = await prisma.leaderboardEntry.count();
   const totalLbPrizes = await prisma.leaderboardPrize.count();
+  const totalOffers = await prisma.offer.count();
+  const totalFavorites = await prisma.favorite.count();
+  const totalActivity = await prisma.activityLog.count();
+  const totalSnapshots = await prisma.portfolioSnapshot.count();
 
   console.log('\n=== Seed Complete ===');
   console.log(`Users:        ${totalUsers}`);
@@ -856,6 +1218,10 @@ async function main() {
   console.log(`Points Ledger:${totalLedger}`);
   console.log(`LB Entries:   ${totalLbEntries}`);
   console.log(`LB Prizes:    ${totalLbPrizes}`);
+  console.log(`Offers:       ${totalOffers}`);
+  console.log(`Favorites:    ${totalFavorites}`);
+  console.log(`Activity Log: ${totalActivity}`);
+  console.log(`Snapshots:    ${totalSnapshots}`);
 }
 
 main()

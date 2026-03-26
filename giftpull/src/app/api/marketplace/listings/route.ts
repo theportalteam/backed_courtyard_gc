@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerAuthSession } from "@/lib/auth";
 import { generateFakeCode } from "@/lib/utils";
+import { logActivity } from "@/lib/activity";
 import type { GiftCardBrand, Prisma } from "@prisma/client";
 
 const VALID_BRANDS: GiftCardBrand[] = [
@@ -238,6 +239,8 @@ export async function POST(request: NextRequest) {
         },
       },
     });
+
+    await logActivity(userId, "MARKETPLACE_LIST", `Listed $${denom} ${brand} Gift Card for $${price.toFixed(2)}`, { amount: price, metadata: { listingId: listing.id, cardBrand: brand } });
 
     return NextResponse.json({ listing }, { status: 201 });
   } catch (error) {

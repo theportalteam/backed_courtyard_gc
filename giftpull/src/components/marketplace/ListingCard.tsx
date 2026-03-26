@@ -16,6 +16,7 @@ import { cn, formatCurrency, getBrandColor, getBrandDisplayName } from "@/lib/ut
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { FavoriteButton } from "@/components/ui/FavoriteButton";
 
 export interface ListingCardData {
   id: string;
@@ -143,6 +144,12 @@ export function ListingCard({ listing }: ListingCardProps) {
           } as React.CSSProperties
         }
       >
+        {/* Favorite button */}
+        <FavoriteButton
+          listingId={listing.id}
+          className="absolute top-3 right-3 z-10"
+        />
+
         {/* Hover glow effect */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-card"

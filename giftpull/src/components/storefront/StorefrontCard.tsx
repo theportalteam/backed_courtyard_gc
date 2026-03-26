@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { PurchaseModal } from "@/components/storefront/PurchaseModal";
+import { FavoriteButton } from "@/components/ui/FavoriteButton";
 
 export interface StorefrontCardData {
   id: string;
@@ -50,6 +51,12 @@ export function StorefrontCard({ card }: StorefrontCardProps) {
           style={{
             boxShadow: `inset 0 0 30px ${brandColor}15, 0 0 20px ${brandColor}10`,
           }}
+        />
+
+        {/* Favorite button */}
+        <FavoriteButton
+          giftCardId={card.id}
+          className="absolute top-3 right-3 z-10"
         />
 
         {/* Top row: brand badge + rarity */}

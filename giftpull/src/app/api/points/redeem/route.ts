@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerAuthSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { logActivity } from "@/lib/activity";
+import { capturePortfolioSnapshot } from "@/lib/portfolio";
 
 /**
  * POST /api/points/redeem
@@ -140,6 +142,9 @@ export async function POST(request: NextRequest) {
           },
         }),
       ]);
+
+    await logActivity(userId, "POINTS_REDEEMED", `Redeemed ${pointsCost} points for ${brand} $${denomination} Gift Card`, { amount: pointsCost, currency: "POINTS", metadata: { redemptionType: "GIFT_CARD", brand, denomination } });
+    await capturePortfolioSnapshot(userId);
 
     return NextResponse.json({
       transaction: {

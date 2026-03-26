@@ -20,6 +20,7 @@ import {
 } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { FavoriteButton } from "@/components/ui/FavoriteButton";
 
 interface RevealCard {
   id: string;
@@ -90,7 +91,12 @@ export function RevealScreen({
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
       {/* Card display */}
-      <div className="mb-6">
+      <div className="mb-6 relative">
+        <FavoriteButton
+          giftCardId={card.id}
+          size="md"
+          className="absolute top-4 right-4 z-20"
+        />
         {isLegendary ? (
           <div
             className="p-[3px] rounded-none mx-auto"

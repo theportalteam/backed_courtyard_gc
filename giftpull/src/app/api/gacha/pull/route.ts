@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerAuthSession } from "@/lib/auth";
 import { executeGachaPull, CCLockedError } from "@/lib/gacha-engine";
+import { logActivity } from "@/lib/activity";
+import { capturePortfolioSnapshot } from "@/lib/portfolio";
 import type { PaymentMethod, PackTier } from "@prisma/client";
 
 const VALID_PAYMENT_METHODS: PaymentMethod[] = [
@@ -73,6 +75,12 @@ export async function POST(request: NextRequest) {
       paymentMethod as PaymentMethod,
       origin
     );
+
+    await logActivity(userId, "GACHA_PULL", `Pulled ${packTier} Pack — $${result.giftCard.denomination} ${result.giftCard.brand} Gift Card (${result.rarityTier})`, { amount: result.pull.cardValue, currency: "USD", metadata: { packTier, cardBrand: result.giftCard.brand, cardValue: result.giftCard.denomination, rarity: result.rarityTier } });
+    if (result.pointsEarned > 0) {
+      await logActivity(userId, "POINTS_EARNED", `Earned ${result.pointsEarned} points from ${packTier} Pack pull`, { amount: result.pointsEarned, currency: "POINTS", metadata: { source: "GACHA_EARN" } });
+    }
+    await capturePortfolioSnapshot(userId);
 
     return NextResponse.json({
       pull: result.pull,
