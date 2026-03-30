@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { ShoppingCart } from "lucide-react";
 import { cn, formatCurrency, getBrandColor, getBrandDisplayName, getBrandLogo, getRarityColor } from "@/lib/utils";
 import { Card } from "@/components/ui/Card";
@@ -24,7 +26,19 @@ interface StorefrontCardProps {
 }
 
 export function StorefrontCard({ card }: StorefrontCardProps) {
+  const { status } = useSession();
+  const router = useRouter();
   const [purchaseOpen, setPurchaseOpen] = useState(false);
+
+  const isAuthenticated = status === "authenticated";
+
+  const handleBuy = () => {
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+    setPurchaseOpen(true);
+  };
 
   const brandColor = getBrandColor(card.brand);
   const brandName = getBrandDisplayName(card.brand);
@@ -44,7 +58,7 @@ export function StorefrontCard({ card }: StorefrontCardProps) {
             "--brand-color": brandColor,
           } as React.CSSProperties
         }
-        onClick={() => setPurchaseOpen(true)}
+        onClick={handleBuy}
       >
         {/* Brand glow on hover */}
         <div
@@ -154,7 +168,7 @@ export function StorefrontCard({ card }: StorefrontCardProps) {
             icon={<ShoppingCart className="w-4 h-4" />}
             onClick={(e) => {
               e.stopPropagation();
-              setPurchaseOpen(true);
+              handleBuy();
             }}
           >
             Buy Now

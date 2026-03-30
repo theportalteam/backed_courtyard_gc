@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { Package, Tag } from "lucide-react";
 import { formatCurrency, getBrandDisplayName, getBrandColor } from "@/lib/utils";
 import { Card } from "@/components/ui/Card";
@@ -30,7 +32,19 @@ interface BundleCardProps {
 }
 
 export function BundleCard({ bundle }: BundleCardProps) {
+  const { status } = useSession();
+  const router = useRouter();
   const [purchaseOpen, setPurchaseOpen] = useState(false);
+
+  const isAuthenticated = status === "authenticated";
+
+  const handleBuy = () => {
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+    setPurchaseOpen(true);
+  };
 
   const savings = bundle.faceValue - bundle.price;
 
@@ -125,7 +139,7 @@ export function BundleCard({ bundle }: BundleCardProps) {
             size="md"
             className="w-full"
             icon={<Package className="w-4 h-4" />}
-            onClick={() => setPurchaseOpen(true)}
+            onClick={handleBuy}
           >
             Buy Bundle
           </Button>
