@@ -1,16 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { Suspense, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Check, ShoppingBag, User } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
-export default function StorefrontPurchaseSuccessPage() {
-  const searchParams = useSearchParams();
+function SuccessContent() {
   const { update: updateSession } = useSession();
-  const sessionId = searchParams.get("session_id");
 
   // Refresh session balances on mount
   useEffect(() => {
@@ -55,5 +52,13 @@ export default function StorefrontPurchaseSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function StorefrontPurchaseSuccessPage() {
+  return (
+    <Suspense>
+      <SuccessContent />
+    </Suspense>
   );
 }
