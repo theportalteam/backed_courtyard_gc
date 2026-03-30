@@ -266,10 +266,6 @@ export function ListingCard({ listing }: ListingCardProps) {
             size="md"
             className="w-full"
             icon={<ShoppingCart className="w-4 h-4" />}
-            onClick={(e) => {
-              e.preventDefault();
-              // Navigation handled by the Link wrapper
-            }}
           >
             Buy Now
           </Button>

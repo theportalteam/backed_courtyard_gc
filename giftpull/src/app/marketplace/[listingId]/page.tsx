@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import {
@@ -180,6 +180,7 @@ export default function ListingDetailPage() {
     | { id?: string; pointsBalance?: number; usdcBalance?: number; portalBalance?: number }
     | undefined;
 
+  const searchParams = useSearchParams();
   const listingId = params.listingId as string;
 
   const [listing, setListing] = useState<ListingDetail | null>(null);
@@ -236,6 +237,17 @@ export default function ListingDetailPage() {
   useEffect(() => {
     fetchListing();
   }, [fetchListing]);
+
+  // Handle ?purchased=true after Stripe redirect
+  useEffect(() => {
+    if (searchParams.get("purchased") === "true") {
+      setPurchaseSuccess(true);
+      fetchListing();
+      updateSession();
+      // Clean the URL (remove query param)
+      router.replace(`/marketplace/${listingId}`, { scroll: false });
+    }
+  }, [searchParams, listingId, fetchListing, updateSession, router]);
 
   // Determine viewer relationship
   const isOwner = listing && user?.id === listing.seller.id;

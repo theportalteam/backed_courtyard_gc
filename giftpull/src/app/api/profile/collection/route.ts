@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     }
 
     const cards = await prisma.giftCard.findMany({
-      where: { currentOwnerId: session.user.id, status: { in: ["RESERVED", "LISTED"] } },
+      where: { currentOwnerId: session.user.id, status: { in: ["SOLD", "RESERVED", "LISTED"] } },
       orderBy,
       select: {
         id: true, brand: true, denomination: true, fmv: true,

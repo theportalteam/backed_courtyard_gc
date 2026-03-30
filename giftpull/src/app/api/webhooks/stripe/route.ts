@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { verifyWebhookSignature } from "@/lib/stripe";
 import { earnPoints, calculatePointsEarned } from "@/lib/points";
+import { logActivity } from "@/lib/activity";
+import { capturePortfolioSnapshot } from "@/lib/portfolio";
 import Stripe from "stripe";
 
 export async function POST(request: NextRequest) {
@@ -56,6 +58,17 @@ export async function POST(request: NextRequest) {
           bundleId: metadata.bundleId,
           cardIds,
           userId,
+          stripeSessionId: session.id,
+          amount: (session.amount_total || 0) / 100,
+        });
+      }
+
+      // ── P2P marketplace purchase ────────────────────────────
+      else if (type === "p2p_purchase" && metadata.listingId) {
+        await fulfillP2PPurchase({
+          listingId: metadata.listingId,
+          buyerId: userId,
+          sellerId: metadata.sellerId || "",
           stripeSessionId: session.id,
           amount: (session.amount_total || 0) / 100,
         });
@@ -158,6 +171,143 @@ async function fulfillCardPurchase({
       data: { pointsEarned },
     });
   }
+}
+
+// Commission rates by seller tier (mirrors buy/route.ts)
+const COMMISSION_RATES: Record<string, number> = {
+  NEW: 0.10,
+  VERIFIED: 0.07,
+  POWER: 0.05,
+};
+
+async function fulfillP2PPurchase({
+  listingId,
+  buyerId,
+  sellerId,
+  stripeSessionId,
+  amount,
+}: {
+  listingId: string;
+  buyerId: string;
+  sellerId: string;
+  stripeSessionId: string;
+  amount: number;
+}) {
+  // Idempotency check
+  const existing = await prisma.transaction.findFirst({
+    where: {
+      stripePaymentIntentId: stripeSessionId,
+      status: "COMPLETED",
+    },
+  });
+
+  if (existing) {
+    console.log(`P2P purchase already fulfilled: ${stripeSessionId}`);
+    return;
+  }
+
+  const listing = await prisma.p2PListing.findUnique({
+    where: { id: listingId },
+    include: {
+      seller: { select: { id: true, name: true, sellerTier: true } },
+      giftCard: true,
+    },
+  });
+
+  if (!listing || listing.status !== "ACTIVE") {
+    console.error(`Listing ${listingId} not available for fulfillment (status: ${listing?.status})`);
+    return;
+  }
+
+  const actualSellerId = listing.sellerId || sellerId;
+  const commissionRate = COMMISSION_RATES[listing.seller.sellerTier] ?? 0.10;
+  const commission = Math.round(listing.askingPrice * commissionRate * 100) / 100;
+  const sellerPayout = Math.round((listing.askingPrice - commission) * 100) / 100;
+
+  const transaction = await prisma.$transaction(async (tx) => {
+    // Mark listing as SOLD
+    await tx.p2PListing.update({
+      where: { id: listingId },
+      data: {
+        status: "SOLD",
+        buyerId,
+      },
+    });
+
+    // Update card: RESERVED with buyer as owner (buyer must confirm to finalize)
+    await tx.giftCard.update({
+      where: { id: listing.giftCardId },
+      data: {
+        status: "RESERVED",
+        currentOwnerId: buyerId,
+      },
+    });
+
+    // Credit seller's USDC balance (minus commission)
+    await tx.user.update({
+      where: { id: actualSellerId },
+      data: {
+        usdcBalance: { increment: sellerPayout },
+        totalSales: { increment: 1 },
+      },
+    });
+
+    // Create buyer transaction
+    const buyerTxn = await tx.transaction.create({
+      data: {
+        type: "P2P_PURCHASE",
+        userId: buyerId,
+        giftCardId: listing.giftCardId,
+        amount: listing.askingPrice,
+        paymentMethod: "STRIPE",
+        stripePaymentIntentId: stripeSessionId,
+        status: "COMPLETED",
+      },
+    });
+
+    // Create seller transaction
+    await tx.transaction.create({
+      data: {
+        type: "P2P_SALE",
+        userId: actualSellerId,
+        giftCardId: listing.giftCardId,
+        amount: sellerPayout,
+        paymentMethod: "STRIPE",
+        status: "COMPLETED",
+        metadata: {
+          commission,
+          commissionRate,
+          listingId: listing.id,
+        },
+      },
+    });
+
+    return buyerTxn;
+  });
+
+  // Earn points for buyer
+  const pointsEarned = calculatePointsEarned(amount, "STRIPE", false);
+
+  if (pointsEarned > 0) {
+    await earnPoints({
+      userId: buyerId,
+      amount: pointsEarned,
+      type: "PURCHASE_EARN",
+      description: `P2P purchase: ${listing.giftCard.brand} $${listing.giftCard.denomination}`,
+      transactionId: transaction.id,
+    });
+
+    await prisma.transaction.update({
+      where: { id: transaction.id },
+      data: { pointsEarned },
+    });
+  }
+
+  // Log activity
+  await logActivity(buyerId, "MARKETPLACE_PURCHASE", `Bought $${listing.giftCard.denomination} ${listing.giftCard.brand} Gift Card for $${listing.askingPrice.toFixed(2)}`, { amount: listing.askingPrice, currency: "USD", metadata: { listingId, sellerId: actualSellerId } });
+  await logActivity(actualSellerId, "MARKETPLACE_SALE", `Sold $${listing.giftCard.denomination} ${listing.giftCard.brand} Gift Card for $${listing.askingPrice.toFixed(2)}`, { amount: listing.askingPrice, currency: "USD", metadata: { listingId, buyerId, commission } });
+  await capturePortfolioSnapshot(buyerId);
+  await capturePortfolioSnapshot(actualSellerId);
 }
 
 async function fulfillBundlePurchase({

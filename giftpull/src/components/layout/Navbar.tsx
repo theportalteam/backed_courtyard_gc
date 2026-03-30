@@ -33,7 +33,7 @@ const navLinks: NavLink[] = [
 
 export function Navbar() {
   const pathname = usePathname();
-  const { data: session, status } = useSession();
+  const { data: session, status, update: updateSession } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const user = session?.user as
@@ -44,6 +44,25 @@ export function Navbar() {
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
+
+  // Refresh balances when tab regains focus (covers Stripe redirect, tab switching)
+  useEffect(() => {
+    if (status !== "authenticated") return;
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        updateSession();
+      }
+    };
+    const handleFocus = () => updateSession();
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    window.addEventListener("focus", handleFocus);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener("focus", handleFocus);
+    };
+  }, [status, updateSession]);
 
   const isActive = (href: string) =>
     pathname === href || pathname?.startsWith(href + "/");

@@ -7,12 +7,12 @@ import {
   Coins,
   CircleDollarSign,
   Check,
-  Copy,
   ShoppingBag,
   Loader2,
   Hexagon,
+  AlertTriangle,
 } from "lucide-react";
-import { cn, formatCurrency, formatPoints, getBrandColor, getBrandDisplayName, generateFakeCode } from "@/lib/utils";
+import { cn, formatCurrency, formatPoints, getBrandColor, getBrandDisplayName } from "@/lib/utils";
 import { calculateFee } from "@/lib/fees";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
@@ -50,10 +50,9 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodType>("STRIPE");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [revealedCode, setRevealedCode] = useState("");
   const [pointsEarned, setPointsEarned] = useState(0);
   const [animatedPoints, setAnimatedPoints] = useState(0);
-  const [copied, setCopied] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const pointsBalance = user?.pointsBalance ?? 0;
   const usdcBalance = user?.usdcBalance ?? 0;
@@ -79,10 +78,9 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
         setSelectedMethod("STRIPE");
         setLoading(false);
         setSuccess(false);
-        setRevealedCode("");
         setPointsEarned(0);
         setAnimatedPoints(0);
-        setCopied(false);
+        setErrorMsg("");
       }, 200);
       return () => clearTimeout(timer);
     }
@@ -109,37 +107,40 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
 
   const handleConfirm = useCallback(async () => {
     setLoading(true);
+    setErrorMsg("");
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Map modal's "USDC" to the API's expected "USDC_BASE"
+      const apiPaymentMethod = selectedMethod === "USDC" ? "USDC_BASE" : selectedMethod;
 
-      const earned = Math.floor(item.price * POINTS_PER_DOLLAR);
-      setPointsEarned(earned);
-      setRevealedCode(generateFakeCode());
+      const res = await fetch("/api/storefront/cards/purchase", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cardId: item.id, paymentMethod: apiPaymentMethod }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Purchase failed");
+      }
+
+      // Stripe: redirect to checkout
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+        return;
+      }
+
+      // Non-Stripe: show success
+      setPointsEarned(data.pointsEarned ?? 0);
       setSuccess(true);
-      // Refresh session to get updated balances
       await updateSession();
-    } catch {
-      // In production, show error toast
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : "Purchase failed");
     } finally {
       setLoading(false);
     }
-  }, [item.price]);
-
-  const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(revealedCode);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Fallback: select the code text
-    }
-  }, [revealedCode]);
-
-  const handleBuyAnother = useCallback(() => {
-    onClose();
-  }, [onClose]);
+  }, [item.id, selectedMethod, updateSession]);
 
   // -- Success View --
   if (success) {
@@ -158,51 +159,23 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
             {item.name}
           </p>
 
-          {/* Card code reveal */}
-          {type === "card" && (
-            <div className="mb-6">
-              <p className="text-xs text-text-secondary uppercase tracking-wider font-semibold mb-2">
-                Your Card Code
-              </p>
-              <div className="relative inline-flex items-center gap-2 bg-bg-elevated border border-bg-border rounded-none px-5 py-3">
-                <code className="text-lg font-mono font-bold text-text-primary tracking-widest select-all">
-                  {revealedCode}
-                </code>
-                <button
-                  onClick={handleCopy}
-                  className="p-1.5 rounded-none hover:bg-bg-elevated transition-colors text-text-secondary hover:text-text-primary"
-                  title="Copy code"
-                >
-                  {copied ? (
-                    <Check className="w-4 h-4 text-success" />
-                  ) : (
-                    <Copy className="w-4 h-4" />
-                  )}
-                </button>
-              </div>
-              {copied && (
-                <p className="text-xs text-success mt-1.5">Copied to clipboard!</p>
-              )}
-            </div>
-          )}
-
-          {type === "bundle" && (
-            <div className="mb-6 bg-bg-elevated/50 border border-bg-border rounded-none p-4">
-              <p className="text-sm text-text-secondary">
-                Your bundle codes have been delivered to your account. Visit your{" "}
-                <span className="text-primary font-medium">Profile</span> to view
-                all purchased cards.
-              </p>
-            </div>
-          )}
+          <div className="mb-6 bg-bg-elevated/50 border border-bg-border rounded-none p-4">
+            <p className="text-sm text-text-secondary">
+              Your {type === "bundle" ? "bundle codes have" : "card has"} been delivered to your account. Visit your{" "}
+              <span className="text-primary font-medium">Profile</span> to view
+              all purchased cards.
+            </p>
+          </div>
 
           {/* Points earned */}
-          <div className="inline-flex items-center gap-2 bg-warning/10 border border-warning/20 rounded-full px-4 py-2 mb-6">
-            <Coins className="w-4 h-4 text-warning" />
-            <span className="text-sm font-semibold text-warning">
-              +{formatPoints(animatedPoints)} Points Earned
-            </span>
-          </div>
+          {pointsEarned > 0 && (
+            <div className="inline-flex items-center gap-2 bg-warning/10 border border-warning/20 rounded-full px-4 py-2 mb-6">
+              <Coins className="w-4 h-4 text-warning" />
+              <span className="text-sm font-semibold text-warning">
+                +{formatPoints(animatedPoints)} Points Earned
+              </span>
+            </div>
+          )}
 
           {/* Buy another */}
           <div>
@@ -211,7 +184,7 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
               size="md"
               className="w-full"
               icon={<ShoppingBag className="w-4 h-4" />}
-              onClick={handleBuyAnother}
+              onClick={onClose}
             >
               Buy Another
             </Button>
@@ -481,6 +454,14 @@ export function PurchaseModal({ isOpen, onClose, item, type }: PurchaseModalProp
             </span>
           </div>
         </div>
+
+        {/* Error message */}
+        {errorMsg && (
+          <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-none px-4 py-3 mb-4">
+            <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+            <p className="text-sm text-red-400">{errorMsg}</p>
+          </div>
+        )}
 
         {/* Confirm button */}
         <Button
