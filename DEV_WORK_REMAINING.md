@@ -75,6 +75,25 @@
 
 ---
 
+## Animation Polish (Nice-to-Have)
+
+Current gacha pull animation is production-grade (841-line multi-stage: pack shake, rarity-scaled burst, 3D card flip, Legendary sparkle grid). These are enhancement items, not blockers.
+
+| Area | Current State | Improvement |
+|------|--------------|-------------|
+| Purchase success celebration | Clean fade + points counter | Add confetti/particle burst on buy |
+| Leaderboard rank changes | Animates on row entry/exit only | Animate actual rank movements (position swap) |
+| Card hover effects | Subtle 0.5px lift + border glow | More pronounced scale (1.03x) + rarity-colored glow |
+| Background ambience | Static gradients and blurred blobs | Subtle floating ambient particles |
+| Loading/skeleton states | Basic `animate-pulse` placeholders | Shimmer wave effect (skeleton screen upgrade) |
+| Storefront card reveal | Instant display after purchase | Flip/reveal animation matching gacha style |
+| Navbar points badge | Static number | Animate count-up on points earned |
+| Marketplace listing sold | No feedback | Flash/pulse sold badge animation |
+
+**Priority:** Add confetti on purchase success (high-impact, low-effort). Rest is post-launch polish.
+
+---
+
 ## Not started
 
 | Item | Notes |
@@ -97,4 +116,5 @@
 5. **Production Stripe** — Switch to live keys, configure production webhook URL
 6. **Blockchain** — Real USDC on Base, escrow contract (needs contract dev or careful research)
 7. **Polish** — Mobile responsiveness, loading states, Google OAuth
-8. **Advanced** — Analytics dashboard, autonomous agents, KYC (post-launch)
+8. **Animation polish** — Confetti on purchase, leaderboard rank animations, hover upgrades, shimmer loaders
+9. **Advanced** — Analytics dashboard, autonomous agents, KYC (post-launch)
